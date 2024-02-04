@@ -2,4 +2,32 @@
 School Website Content Management System
 Author -Vijay Kumar
 
-First of all create Virtual Enviornment
+Create a Folder swcms
+
+create Virtual Enviornment
+
+    python -m venv venv
+
+Activate virtual Enviornment
+
+souce venv/Scripts/activate
+
+Install Djano
+
+pip install django
+
+Create Django Project
+
+django-admin startproject school
+
+Open  School Directory
+
+cd school
+
+and run command
+
+python manager.py run server to check if server is running ok
+
+
+
+
