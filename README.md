@@ -35,3 +35,20 @@ Create Admin Login
 
     python manage.py createsuperuser
 
+Create a django app
+
+    python manage.py startapp cms
+
+Now open the setting.py file in your project folder and add cms app to installed app section
+
+    INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'cms',
+    ]
+
+    
