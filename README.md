@@ -31,3 +31,7 @@ Apply Admin Migrations
 
     python manage.py migrate
 
+Create Admin Login
+
+    python manage.py createsuperuser
+
