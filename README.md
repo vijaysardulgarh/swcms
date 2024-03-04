@@ -10,20 +10,22 @@ create Virtual Enviornment
 
 Activate virtual Enviornment
     
-    souce venv/Scripts/activate
+    source venv/Scripts/activate
 
-Install Djano
+Install Django
 
-pip install django
+    pip install django
+    
 
 Create Django Project
 
-django-admin startproject school
+    django-admin startproject school
+    
 
 Open  School Directory
 
-cd school
-
+    cd school
+    
 and run command
 
 python manager.py run server to check if server is running ok
