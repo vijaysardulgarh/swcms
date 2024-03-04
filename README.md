@@ -17,18 +17,14 @@ Install Django
     pip install django
     
 
-Create Django Project
+Create Django Project in Present Working Directory
 
     django-admin startproject school .
     
 
-Open  School Directory
+Test Server
 
-    cd school
-    
-and run command
-
-python manager.py run server to check if server is running ok
+    python manage.py runserver 
 
 
 
