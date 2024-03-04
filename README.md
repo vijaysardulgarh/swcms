@@ -9,6 +9,7 @@ create Virtual Enviornment
     python -m venv venv
 
 Activate virtual Enviornment
+    
     souce venv/Scripts/activate
 
 Install Djano
