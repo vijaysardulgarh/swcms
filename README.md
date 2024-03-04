@@ -27,5 +27,7 @@ Test Server
     python manage.py runserver 
 
 
+Apply Admin Migrations
 
+    python manage.py migrate
 
