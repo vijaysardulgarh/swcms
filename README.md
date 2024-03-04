@@ -19,7 +19,7 @@ Install Django
 
 Create Django Project
 
-    django-admin startproject school
+    django-admin startproject school .
     
 
 Open  School Directory
