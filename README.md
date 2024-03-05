@@ -51,6 +51,33 @@ Now open the setting.py file in your project folder and add cms app to installed
     'cms',
     ]
 
+
+Create a new file in cms folder and save it with name urls.py 
+
+    from django.urls import path
+
+    urlpatterns = [
+    path('',view.index,name='index'),
+    ]
+
+Now route this file in urls.py file in school folder
+
+    from django.contrib import admin
+    from django.urls import path,include
+
+    urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('/', include("cms.urls")),
+    ]
+
+ now Create a view for this. Goto view file in cms folder
+
+    from django.shortcuts import render
+    from . import views
+
+    def index (request):
+    return render(request,"index.html",{})
+
 Create a templates folder in cms app and create html files index.html
 
 index.html
@@ -68,23 +95,4 @@ index.html
         </body>
         
     </html>
-Create a file in cms folder and save it with name urls.py 
-
-    from django.urls import path
-
-    urlpatterns = [
     
-    ]
-
-
-
-Now route this file in urls.py file in school folder
-
-    from django.contrib import admin
-    from django.urls import path,include
-
-    urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('/', include("cms.urls")),
-    ]
- 
