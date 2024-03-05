@@ -57,7 +57,7 @@ Create a new file in cms folder and save it with name urls.py
     from django.urls import path
 
     urlpatterns = [
-    path('',view.index,name='index'),
+    path('',views.index,name='index'),
     ]
 
 Now route this file in urls.py file in school folder
