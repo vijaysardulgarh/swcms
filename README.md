@@ -51,6 +51,23 @@ Now open the setting.py file in your project folder and add cms app to installed
     'cms',
     ]
 
+Create a templates folder in cms app and create html files index.html
+
+index.html
+
+    <!DOCTYPE html>
+    
+        <head>
+
+        </head>
+        
+        <body>
+   
+        Hello! I am Home Page
+        
+        </body>
+        
+    </html>
 Create a file in cms folder and save it with name urls.py 
 
     from django.urls import path
