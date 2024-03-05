@@ -51,4 +51,13 @@ Now open the setting.py file in your project folder and add cms app to installed
     'cms',
     ]
 
-    
+Create a file file in cms folder and save it with name urls.py now route this file in urls.py file in school folder
+
+    from django.contrib import admin
+    from django.urls import path,include
+
+    urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('/', include("cms.urls")),
+    ]
+ 
