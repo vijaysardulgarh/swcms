@@ -131,6 +131,7 @@ Add following model code to model file in cms folder
             return self.name
         class Meta:
             verbose_name_plural = 'Class'
+            
     class Section(models.Model):
         name = models.CharField(max_length=50)
         class_level = models.ForeignKey(Class, on_delete=models.CASCADE)  # Link to Class
