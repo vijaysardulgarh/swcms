@@ -112,6 +112,9 @@ Add following model code to model file in cms folder
         email = models.EmailField(blank=True)
         phone_number = models.CharField(max_length=15, blank=True)
         logo = models.ImageField(upload_to='logos/', blank=True)  # Specify upload directory
+        accreditation = models.CharField(max_length=255, blank=True)
+        mission_statement = models.TextField(blank=True)
+        vision_statement = models.TextField(blank=True)
         motto = models.CharField(max_length=255, blank=True)
         established_date = models.DateField(blank=True)
         principal_name = models.CharField(max_length=255, blank=True)
@@ -122,7 +125,40 @@ Add following model code to model file in cms folder
     
         def __str__(self):
             return self.name
+            
+    class Department(models.Model):
+        name = models.CharField(max_length=100)
+        description = models.TextField()
+        head_of_department = models.OneToOneField('Staff', on_delete=models.SET_NULL, null=True,         related_name='department_head')
+
+        def __str__(self):
+            return self.name
+
+    class Event(models.Model):
+        title = models.CharField(max_length=255)
+        description = models.TextField()
+        location = models.CharField(max_length=255)
+        start_date = models.DateTimeField()
+        end_date = models.DateTimeField()
     
+        def __str__(self):
+            return self.title
+        
+    class Facility(models.Model):
+        name = models.CharField(max_length=100)
+        description = models.TextField()
+        image = models.ImageField(upload_to='facility_images/', blank=True)
+    
+        def __str__(self):
+            return self.name   
+
+     class ExtracurricularActivity(models.Model):
+        name = models.CharField(max_length=100)
+        description = models.TextField()
+    
+        def __str__(self):
+            return self.name
+        
     class Class(models.Model):
         name = models.CharField(max_length=50, unique=True)  # Ensure class name is unique
         school = models.ForeignKey(School, on_delete=models.CASCADE)  # Link to School
@@ -132,6 +168,31 @@ Add following model code to model file in cms folder
         class Meta:
             verbose_name_plural = 'Class'
             
+    class Student(models.Model):
+        school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='students')
+        name = models.CharField(max_length=100)
+        roll_number = models.CharField(max_length=20)
+        email = models.EmailField()
+        date_of_birth = models.DateField()
+        address = models.TextField()
+        courses = models.ManyToManyField(Course, related_name='students', blank=True)
+        extracurricular_activities = models.ManyToManyField(ExtracurricularActivity, related_name='participants', blank=True)
+    
+        def __str__(self):
+            return self.name
+
+    class Staff(models.Model):
+        school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='staff')
+        name = models.CharField(max_length=100)
+        role = models.CharField(max_length=100)
+        email = models.EmailField()
+        phone_number = models.CharField(max_length=20)
+        bio = models.TextField(blank=True)
+        profile_picture = models.ImageField(upload_to='staff_profile/', blank=True)
+    
+        def __str__(self):
+            return self.name
+        
     class Section(models.Model):
         name = models.CharField(max_length=50)
         class_level = models.ForeignKey(Class, on_delete=models.CASCADE)  # Link to Class
