@@ -423,4 +423,55 @@ from django.utils import timezone
         position = models.PositiveIntegerField()
         reason = models.TextField(null=True, blank=True)
         date_awarded = models.DateField(null=True, blank=True)
-        award_type = models.CharField(max_length=20, choices=STUDENT_TYPE_CHOICES)       
+        award_type = models.CharField(max_length=20, choices=STUDENT_TYPE_CHOICES)    
+
+Register all above model in admin.py in school folder
+
+    from django.contrib import admin
+
+    from . models import School
+    from . models import Department
+    from . models import Event
+    from . models import Facility
+    #from . models import ExtracurricularActivity
+    from . models import Class
+    from . models import Course
+    from . models import Staff
+    from . models import Student
+    from . models import Section
+    from . models import Subject
+    from . models import Teacher
+    from . models import TimetableSlot
+    from . models import TimetableEntry
+    from . models import SmcCommitteeMember
+    from . models import Affiliation
+    from . models import News
+    from . models import Coordinator
+    from . models import Committee
+    from . models import Document
+    class TeacherAdmin(admin.ModelAdmin):
+        list_display =("first_name","last_name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","image","email","phone_number")
+        
+    
+    admin.site.register(School)
+    admin.site.register(Department)
+    admin.site.register(Event)
+    admin.site.register(Facility)
+    #admin.site.register(ExtracurricularActivity)
+    admin.site.register(Class)
+    admin.site.register(Course)
+    admin.site.register(Staff)
+    admin.site.register(Student)
+    admin.site.register(Section)
+    admin.site.register(Subject)
+    admin.site.register(Teacher,TeacherAdmin)
+    admin.site.register(TimetableSlot)
+    admin.site.register(TimetableEntry)
+    admin.site.register(SmcCommitteeMember)
+    admin.site.register(Affiliation)
+    admin.site.register(News)
+    admin.site.register(Coordinator)
+    admin.site.register(Committee)
+    admin.site.register(Document)
+
+        
