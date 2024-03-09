@@ -102,39 +102,39 @@ Install Package pillow for image field
     
 Add following model code to model file in cms folder
 
-    from django.db import models
+from django.db import models
 from django.utils import timezone
 #from django.contrib.auth.models import AbstractUser
 
-#class User(AbstractUser):
-#        ('student', 'Student'),
-#        ('teacher', 'Teacher'),
-#        ('parent', 'Parent/Guardian'),
-#        ('administrator', 'Administrator'),
-#        ('staff', 'Staff/Non-Teaching Personnel'),
-#        ('guest', 'Guest/User with Limited Access'),
-#    )
-#    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
+    #class User(AbstractUser):
+    #        ('student', 'Student'),
+    #        ('teacher', 'Teacher'),
+    #        ('parent', 'Parent/Guardian'),
+    #        ('administrator', 'Administrator'),
+    #        ('staff', 'Staff/Non-Teaching Personnel'),
+    #        ('guest', 'Guest/User with Limited Access'),
+    #    )
+    #    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
 
-class School(models.Model):
-    name = models.CharField(max_length=255)
-    address = models.TextField(blank=True)
-    website = models.URLField(blank=True)
-    email = models.EmailField(blank=True)
-    phone_number = models.CharField(max_length=15, blank=True)
-    logo = models.ImageField(upload_to='logos/', blank=True)  # Specify upload directory
-    accreditation = models.CharField(max_length=255, blank=True)
-    mission_statement = models.TextField(blank=True)
-    vision_statement = models.TextField(blank=True)
-    motto = models.CharField(max_length=255, blank=True)
-    established_date = models.DateField(blank=True)
-    principal_name = models.CharField(max_length=255, blank=True)
-    description = models.TextField(blank=True)
+    class School(models.Model):
+        name = models.CharField(max_length=255)
+        address = models.TextField(blank=True)
+        website = models.URLField(blank=True)
+        email = models.EmailField(blank=True)
+        phone_number = models.CharField(max_length=15, blank=True)
+        logo = models.ImageField(upload_to='logos/', blank=True)  # Specify upload directory
+        accreditation = models.CharField(max_length=255, blank=True)
+        mission_statement = models.TextField(blank=True)
+        vision_statement = models.TextField(blank=True)
+        motto = models.CharField(max_length=255, blank=True)
+        established_date = models.DateField(blank=True)
+        principal_name = models.CharField(max_length=255, blank=True)
+        description = models.TextField(blank=True)
 
-    # Location using GeoDjango (optional)
-    #location = models.PointField(blank=True, null=True)  # Requires GeoDjango installation
+        # Location using GeoDjango (optional)
+        #location = models.PointField(blank=True, null=True)  # Requires GeoDjango installation
 
-    def __str__(self):
+        def __str__(self):
         return self.name
         
 class Department(models.Model):
