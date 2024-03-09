@@ -321,7 +321,6 @@ class TimetableEntry(models.Model):
         return f"{self.section.name} - {self.subject.name} - {self.teacher.name} ({self.slot})"
                         
 
-
 class SmcCommitteeMember(models.Model):
     name = models.CharField(max_length=100)
     designation = models.CharField(max_length=50)  
@@ -410,18 +409,18 @@ class News(models.Model):
         ordering = ['-date_published']  # Order by most recent first    
 
 
-class Topper(models.Model):
-    STUDENT_TYPE_CHOICES = (
+    class Topper(models.Model):
+        STUDENT_TYPE_CHOICES = (
         ('Topper', 'Topper'),
         ('Shining Star', 'Shining Star')
     )
 
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    subject = models.CharField(max_length=100)
-    obtained_marks = models.FloatField()
-    total_marks = models.FloatField()
-    exam_date = models.DateField()
-    position = models.PositiveIntegerField()
-    reason = models.TextField(null=True, blank=True)
-    date_awarded = models.DateField(null=True, blank=True)
-    award_type = models.CharField(max_length=20, choices=STUDENT_TYPE_CHOICES)       
+        student = models.ForeignKey('Student', on_delete=models.CASCADE)
+        subject = models.CharField(max_length=100)
+        obtained_marks = models.FloatField()
+        total_marks = models.FloatField()
+        exam_date = models.DateField()
+        position = models.PositiveIntegerField()
+        reason = models.TextField(null=True, blank=True)
+        date_awarded = models.DateField(null=True, blank=True)
+        award_type = models.CharField(max_length=20, choices=STUDENT_TYPE_CHOICES)       
