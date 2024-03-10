@@ -20,3 +20,7 @@ Verify firewal status wheather its active or not
 if it is not active. Activate it
 
     sudo ufw enable
+
+Step 3 – Checking your Web Server
+
+  systemctl status nginx
