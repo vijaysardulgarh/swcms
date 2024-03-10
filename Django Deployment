@@ -7,16 +7,16 @@ Step 2 – Adjusting the Firewall
 
   allow Http /https services access thrugh firewall
 
-  sudo ufw allow 'Nginx HTTP'
+    sudo ufw allow 'Nginx HTTP'
 
 Check UFW Configration
 
-  sudo ufw app list
+    sudo ufw app list
 
 Verify firewal status wheather its active or not
 
-  sudo ufw status
+    sudo ufw status
 
 if it is not active. Activate it
 
-  sudo ufw enable
+    sudo ufw enable
