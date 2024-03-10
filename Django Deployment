@@ -24,3 +24,10 @@ if it is not active. Activate it
 Step 3 – Checking your Web Server
 
   systemctl status nginx
+
+
+
+Install SSL Certificate for Domains on Nginx VPS Hosting Remote Server
+
+sudo apt install certbot python3-certbot-nginx
+
