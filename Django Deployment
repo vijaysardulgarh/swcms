@@ -12,6 +12,16 @@ Step 1 – Installing Nginx
   sudo apt update
   sudo apt install nginx
 
+
+Step 3 – Checking your Web Server
+
+  systemctl status nginx
+
+Verify Nginx is Active and Running
+
+  sudo service nginx status
+
+
 Step 2 – Adjusting the Firewall
 
 
@@ -36,9 +46,7 @@ if it is not active. Activate it
 
     sudo ufw enable
 
-Step 3 – Checking your Web Server
 
-  systemctl status nginx
 
 
 
