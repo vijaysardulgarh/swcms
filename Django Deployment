@@ -47,10 +47,27 @@ if it is not active. Activate it
     sudo ufw enable
 
 
-
-
-
 Install SSL Certificate for Domains on Nginx VPS Hosting Remote Server
 
-sudo apt install certbot python3-certbot-nginx
+Install Certbot and it’s Nginx plugin
+
+  sudo apt install certbot python3-certbot-nginx
+
+Verify Web Server Ports are Open and Allowed through Firewall
+
+  sudo ufw status verbose
+
+Obtain an SSL certificate
+
+  sudo certbot --nginx -d your_domain.com -d www.your_domain.com
+
+Check Status of Certbot
+
+  sudo systemctl status certbot.timer
+
+Dry Run SSL Renewal
+
+  sudo certbot renew --dry-run
+
+
 
