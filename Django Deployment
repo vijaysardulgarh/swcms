@@ -25,6 +25,8 @@ applications that rely on network communications will typically set up a UFW pro
   allow Http /https services access thrugh firewall
 
     sudo ufw allow 'Nginx HTTP'
+    sudo ufw allow 'Nginx HTTPS'
+    sudo ufw allow 'OpenSSH'
 
 Verify firewal status wheather its active or not
 
