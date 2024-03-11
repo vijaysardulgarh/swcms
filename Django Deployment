@@ -22,7 +22,7 @@ Check UFW Configration
 
 applications that rely on network communications will typically set up a UFW profile that you can use to allow connection from external addresses. 
 
-  allow Http /https services access thrugh firewall
+  allow Http,Https and open ssh services access thrugh firewall
 
     sudo ufw allow 'Nginx HTTP'
     sudo ufw allow 'Nginx HTTPS'
