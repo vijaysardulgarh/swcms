@@ -1,6 +1,5 @@
 This script automates the process of pulling updates from your GitHub repository to your server and then performs necessary actions like installing dependencies, collecting static files, applying migrations, and restarting the Gunicorn server and Nginx to apply the changes.
 
-
 #!/bin/bash
 
 # Navigate to the project directory
