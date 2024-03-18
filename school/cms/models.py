@@ -36,7 +36,7 @@ class School(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
     logo = models.ImageField(upload_to='logos/', blank=True)  # Specify upload directory
     accreditation = models.CharField(max_length=255, blank=True)
-    established_date = models.DateField(blank=True)
+    established_date = models.DateField(null=True, blank=True)
     principal_name = models.CharField(max_length=255, blank=True)
     mission_statement = models.TextField(blank=True)
     vision_statement = models.TextField(blank=True)
@@ -64,6 +64,8 @@ class Facility(models.Model):
     def __str__(self):
         return self.name 
 
+    class Meta:
+        verbose_name_plural = 'Facilities'
 
 class Nodal(models.Model):
     name = models.ForeignKey('Staff', on_delete=models.SET_NULL, null=True, related_name='nodal')
@@ -72,7 +74,7 @@ class Nodal(models.Model):
     bio = models.TextField(blank=True)
     
     def __str__(self):
-        return self.staff.name if self.staff else ""
+        return self.name.name if self.name else ""
     
 
 class Event(models.Model):
@@ -136,7 +138,9 @@ class ExtracurricularActivity(models.Model):
     def __str__(self):
         return self.name
     
-    
+    class Meta:
+        verbose_name_plural = 'Extracurricular Activities'
+        
 class Committee(models.Model):
     name = models.CharField(max_length=100)
     objectives = models.TextField(blank=True)
@@ -181,13 +185,13 @@ class Department(models.Model):
 
 class Class(models.Model):
     CLASS_CHOICES = [
-    ('6', '6th'),
-    ('7', '7th'),
-    ('8', '8th'),
-    ('9', '9th'),
-    ('10', '10th'),
-    ('11', '11th'),
-    ('12', '12th'),
+    ('6th', '6th'),
+    ('7th', '7th'),
+    ('8th', '8th'),
+    ('9th', '9th'),
+    ('10th', '10th'),
+    ('11th', '11th'),
+    ('12th', '12th'),
 ]    
     name = models.CharField(max_length=50, unique=True,choices=CLASS_CHOICES)  # Ensure class name is unique
     school = models.ForeignKey(School, on_delete=models.PROTECT)  # Link to School
@@ -201,10 +205,10 @@ from django.db import models
 
 class Section(models.Model):
     SECTION_CHOICES = [
-        ('A', 'Section A'),
-        ('B', 'Section B'),
-        ('C', 'Section C'),
-        ('D', 'Section D'),
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D'),
         # Add more choices as needed
     ]
     name = models.CharField(max_length=2, choices=SECTION_CHOICES)
@@ -286,11 +290,11 @@ class Staff(models.Model):
     ('OTHER', 'Other'),
     )
   category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, blank=True)
-  date_of_birth = models.DateField(blank=True)
-  joining_date = models.DateField(blank=True)
-  retirement_date = models.DateField(blank=True)
+  date_of_birth = models.DateField(null=True, blank=True)
+  joining_date = models.DateField(null=True, blank=True)
+  retirement_date = models.DateField(null=True, blank=True)
   
-  email = models.EmailField(unique=True)
+  email = models.EmailField(unique=True, blank=True)
   phone_number = models.CharField(max_length=15, blank=True)
   subject = models.CharField(max_length=50, blank=True)
   profile_picture = models.ImageField(upload_to='staff_profile/', blank=True)
@@ -305,6 +309,7 @@ class Staff(models.Model):
     ('ssa', 'SSA'),
     ('guest', 'Guest'),
     ('hkrnl', 'HKRNL'),
+    ('nsqf', 'NSQF'),
     ('other', 'Other'),
 ]
   employment_type = models.CharField(max_length=20, choices=EMPLOYMENT_TYPE_CHOICES)
@@ -314,6 +319,7 @@ class Staff(models.Model):
     return self.name
   
   class Meta:
+    verbose_name_plural = 'Staff'
     ordering = ['employment_type','staff_role']
 
 
@@ -345,6 +351,7 @@ class TimetableEntry(models.Model):
     #substitute_teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
+        verbose_name_plural = 'Time Table Entries'
         unique_together = ('section', 'slot')  # Ensure no duplicate entries for section and slot
 
     def __str__(self):
