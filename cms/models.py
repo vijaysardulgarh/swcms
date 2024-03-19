@@ -323,21 +323,28 @@ class Staff(models.Model):
     ordering = ['employment_type','staff_role']
 
 
-
-class TimetableSlot(models.Model):
-    day = models.CharField(max_length=10, choices=[
+class Day(models.Model):
+    DAY_CHOICES = [
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),
         ('Wednesday', 'Wednesday'),
         ('Thursday', 'Thursday'),
         ('Friday', 'Friday'),
-    ])
+    ]
+    name = models.CharField(max_length=20, choices=DAY_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+
+class TimetableSlot(models.Model):
+
+    day = models.ForeignKey(Day, on_delete=models.CASCADE)
     start_time = models.TimeField()
     end_time = models.TimeField()
 
     def __str__(self):
-        return f"{self.day} - {self.start_time} - {self.end_time}"
-    
+        return f"{self.day.name} - {self.start_time} - {self.end_time}"
 
 class TimetableEntry(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)  # Link to School
