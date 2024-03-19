@@ -19,6 +19,7 @@ from .models import Class
 from .models import Section
 from .models import Subject
 from .models import Staff
+from .models import Day
 from .models import TimetableSlot
 from .models import TimetableEntry
 from .models import Student
@@ -55,10 +56,12 @@ admin.site.register(Class)
 admin.site.register(Section)
 admin.site.register(Subject)
 admin.site.register(Staff,StaffAdmin)
+admin.site.register(Day)
 admin.site.register(TimetableSlot)
 admin.site.register(TimetableEntry)
 admin.site.register(Student)
 admin.site.register(Topper)
 admin.site.register(Book)
+
 
 
