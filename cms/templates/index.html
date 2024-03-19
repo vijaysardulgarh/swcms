@@ -1,0 +1,54 @@
+{%extends 'base.html'%}
+
+    {% block title %} <title>Hello world</title> 
+    {% endblock title %}
+
+
+    {% block content %}
+
+    {% if teachers %}
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Subject</th>
+                <th>Bio</th>
+                <th>Image</th>
+                <th>Date of Birth</th>
+                <th>Joining Date</th>
+                <th>Retirement Date</th>
+                <th>Gender</th>
+                <th>Category</th>
+                <th>Father's Name</th>
+                <th>Mother's Name</th>
+                <th>Spouse</th>
+            </tr>
+        </thead>
+        <tbody class="striker">
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.first_name }}</td>
+                <td>{{ teacher.last_name }}</td>
+                <td>{{ teacher.email }}</td>
+                <td>{{ teacher.phone_number }}</td>
+                <td>{{ teacher.subject }}</td>
+                <td>{{ teacher.bio }}</td>
+                <td>{{ teacher.image }}</td>
+                <td>{{ teacher.date_of_birth }}</td>
+                <td>{{ teacher.joining_date }}</td>
+                <td>{{ teacher.retirement_date }}</td>
+                <td>{{ teacher.gender }}</td>
+                <td>{{ teacher.category }}</td>
+                <td>{{ teacher.father_name }}</td>
+                <td>{{ teacher.mother_name }}</td>
+                <td>{{ teacher.spouse }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% endblock content%}
