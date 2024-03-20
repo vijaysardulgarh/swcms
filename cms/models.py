@@ -250,7 +250,7 @@ class Section(models.Model):
     ]
     name = models.CharField(max_length=2, choices=SECTION_CHOICES)
     section_class = models.ForeignKey('Class', on_delete=models.PROTECT, related_name='sections')
-
+    section_stream = models.ForeignKey('Stream', on_delete=models.PROTECT, related_name='sections')
     def __str__(self):
         return f"{self.section_class.name} ({self.name})"
 
