@@ -182,7 +182,24 @@ class Department(models.Model):
     def __str__(self):
         return self.name
     
+class Stream(models.Model):
+    SCIENCE = 'Science'
+    COMMERCE = 'Commerce'
+    ARTS = 'Arts'
 
+    STREAM_CHOICES = [
+        (SCIENCE, 'Science'),
+        (COMMERCE, 'Commerce'),
+        (ARTS, 'Arts'),
+        # Add more streams as needed
+    ]
+
+    name = models.CharField(max_length=100, choices=STREAM_CHOICES, unique=True)
+    
+
+    def __str__(self):
+        return self.name
+    
 class Class(models.Model):
     CLASS_CHOICES = [
     ('6th', '6th'),
@@ -192,6 +209,7 @@ class Class(models.Model):
     ('10th', '10th'),
     ('11th', '11th'),
     ('12th', '12th'),
+    ('na', 'NA'),
 ]    
     name = models.CharField(max_length=50, unique=True,choices=CLASS_CHOICES)  # Ensure class name is unique
     school = models.ForeignKey(School, on_delete=models.PROTECT)  # Link to School
@@ -209,6 +227,7 @@ class Section(models.Model):
         ('B', 'B'),
         ('C', 'C'),
         ('D', 'D'),
+        ('na', 'NA'),
         # Add more choices as needed
     ]
     name = models.CharField(max_length=2, choices=SECTION_CHOICES)
@@ -270,6 +289,7 @@ class Subject(models.Model):
 
 class Staff(models.Model):
   #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+  employee_id = models.CharField(max_length=20, unique=True)
   school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='staff')
   name = models.CharField(max_length=50)
   father_name = models.CharField(max_length=255, blank=True)
@@ -321,6 +341,60 @@ class Staff(models.Model):
   class Meta:
     verbose_name_plural = 'Staff'
     ordering = ['employment_type','staff_role']
+
+class Classroom(models.Model):
+    name = models.CharField(max_length=100)
+    capacity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class Timetable(models.Model):
+
+
+    SEASON_CHOICES = (
+        ('winter', 'winter'),
+        ('summer', 'Summer'),
+        ('other', 'Other'),
+        # Add more semesters as needed
+    )
+
+    DAY_CHOICES = (
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+        # Add more days as needed
+    )
+
+    CLASS_TYPE_CHOICES = (
+        ('Regular', 'Regular'),
+        ('Assembly', 'Assembly'),
+        ('Recess', 'Recess'),
+        ('Special', 'Special Event'),
+        # Add more types as needed
+    )
+
+    
+    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
+    class_name = models.ForeignKey('Class', on_delete=models.PROTECT, related_name='Timetable')
+    section = models.ForeignKey('Section', on_delete=models.PROTECT, related_name='timetable')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    class_type = models.CharField(max_length=10, choices=CLASS_TYPE_CHOICES, default='Regular')
+    teachers = models.ManyToManyField(Staff, blank=True)
+    classrooms = models.ManyToManyField(Classroom, blank=True)
+    day = models.CharField(max_length=10, choices=DAY_CHOICES)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    is_mandatory = models.BooleanField(default=True)
+ 
+
+    def __str__(self):
+        return f"{self.day}, {self.start_time} - {self.end_time}: {self.class_name} ({self.section})"
 
 
 class Day(models.Model):

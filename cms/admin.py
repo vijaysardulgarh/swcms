@@ -15,10 +15,13 @@ from .models import Committee
 from .models import CommitteeMember
 from .models import CommitteeMeeting    
 from .models import Department
+from .models import Stream
 from .models import Class
 from .models import Section
 from .models import Subject
 from .models import Staff
+from .models import Classroom
+from .models import Timetable
 from .models import Day
 from .models import TimetableSlot
 from .models import TimetableEntry
@@ -52,10 +55,13 @@ admin.site.register(Committee)
 admin.site.register(CommitteeMember)
 admin.site.register(CommitteeMeeting)
 admin.site.register(Department)
+admin.site.register(Stream)
 admin.site.register(Class)
 admin.site.register(Section)
 admin.site.register(Subject)
 admin.site.register(Staff,StaffAdmin)
+admin.site.register(Classroom)
+admin.site.register(Timetable)
 admin.site.register(Day)
 admin.site.register(TimetableSlot)
 admin.site.register(TimetableEntry)
