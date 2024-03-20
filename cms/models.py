@@ -254,6 +254,9 @@ class Section(models.Model):
     def __str__(self):
         return f"{self.section_class.name} ({self.name})"
 
+
+
+
 class Subject(models.Model):
     HINDI = 'Hindi'
     ENGLISH = 'English'
@@ -367,7 +370,14 @@ class Classroom(models.Model):
     def __str__(self):
         return self.name
 
-
+class ClassIncharge(models.Model):
+    name = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    class_alloted = models.ForeignKey(Class, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.teacher.name} - {self.classroom.name} - {self.class_alloted} - {self.section}"
+    
 class Timetable(models.Model):
 
 
