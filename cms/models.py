@@ -219,7 +219,25 @@ class Class(models.Model):
     class Meta:
         verbose_name_plural = 'Class'
 
-from django.db import models
+
+
+class Stream(models.Model):
+    SCIENCE = 'Science'
+    COMMERCE = 'Commerce'
+    ARTS = 'Arts'
+
+    STREAM_CHOICES = [
+        (SCIENCE, 'Science'),
+        (COMMERCE, 'Commerce'),
+        (ARTS, 'Arts'),
+        # Add more streams as needed
+    ]
+
+    name = models.CharField(max_length=100, choices=STREAM_CHOICES)
+
+    def __str__(self):
+        return self.get_name_display()
+
 
 class Section(models.Model):
     SECTION_CHOICES = [
