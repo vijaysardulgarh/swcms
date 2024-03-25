@@ -3,5 +3,5 @@ from . import views
 from .models import Staff
 # Create your views here.
 def index (request):
-    staffs=Staff.objects.all
-    return render(request,"index.html",{'staffs':staffs})
+    staff_members=Staff.objects.all
+    return render(request,"index.html",{'staff_members':staff_members})

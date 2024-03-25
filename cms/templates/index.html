@@ -6,45 +6,50 @@
 
     {% block content %}
 
-    {% if teachers %}
+    {% if staff_members %}
     <table class="table table-bordered table-hover table-striped">
         <thead class="table-dark">
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Subject</th>
-                <th>Bio</th>
-                <th>Image</th>
-                <th>Date of Birth</th>
-                <th>Joining Date</th>
-                <th>Retirement Date</th>
-                <th>Gender</th>
-                <th>Category</th>
+                <th>Employee ID</th>
+                <th>School</th>
+                <th>Name</th>
                 <th>Father's Name</th>
                 <th>Mother's Name</th>
                 <th>Spouse</th>
+                <th>Gender</th>
+                <th>Category</th>
+                <th>Date of Birth</th>
+                <th>Joining Date</th>
+                <th>Retirement Date</th>
+                <th>Email ID</th>
+                <th>Mobile No</th>
+                <th>Subject</th>
+                <th>Photo</th>
+                <th>Staff Type</th>
+                <th>Employement Type</th>
             </tr>
         </thead>
         <tbody class="striker">
-            {% for teacher in teachers %}
+            {% for staff_members in staff_members %}
             <tr>
-                <td>{{ teacher.first_name }}</td>
-                <td>{{ teacher.last_name }}</td>
-                <td>{{ teacher.email }}</td>
-                <td>{{ teacher.phone_number }}</td>
-                <td>{{ teacher.subject }}</td>
-                <td>{{ teacher.bio }}</td>
-                <td>{{ teacher.image }}</td>
-                <td>{{ teacher.date_of_birth }}</td>
-                <td>{{ teacher.joining_date }}</td>
-                <td>{{ teacher.retirement_date }}</td>
-                <td>{{ teacher.gender }}</td>
-                <td>{{ teacher.category }}</td>
-                <td>{{ teacher.father_name }}</td>
-                <td>{{ teacher.mother_name }}</td>
-                <td>{{ teacher.spouse }}</td>
+                <td>{{ staff.members.employee_id }}</td>
+                <td>{{ staff_members.school }}</td>
+                <td>{{ staff_members.name }}</td>
+                <td>{{ staff_members.father_name }}</td>
+                <td>{{ staff_members.mother_name }}</td>
+                <td>{{ staff_members.spouse_name }}</td>
+                <td>{{ staff_members.gender }}</td>
+                <td>{{ staff_members.category }}</td>
+                <td>{{ staff_members.date_of_birth }}</td>
+                <td>{{ staff_members.joining_date }}</td>
+                <td>{{ staff_members.retirement_date }}</td>
+                <td>{{ staff_members.email }}</td>
+                <td>{{ staff_members.phone_number }}</td>
+                <td>{{ staff_members.subject }}</td>
+                <td>{{ staff_members.profile_picture }}</td>
+                <td>{{ staff_members.staff_role }}</td>
+                <td>{{ staff_members.employment_type }}</td>
+
             </tr>
             {% endfor %}
         </tbody>

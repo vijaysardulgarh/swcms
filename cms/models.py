@@ -220,25 +220,6 @@ class Class(models.Model):
         verbose_name_plural = 'Class'
 
 
-
-class Stream(models.Model):
-    SCIENCE = 'Science'
-    COMMERCE = 'Commerce'
-    ARTS = 'Arts'
-
-    STREAM_CHOICES = [
-        (SCIENCE, 'Science'),
-        (COMMERCE, 'Commerce'),
-        (ARTS, 'Arts'),
-        # Add more streams as needed
-    ]
-
-    name = models.CharField(max_length=100, choices=STREAM_CHOICES)
-
-    def __str__(self):
-        return self.get_name_display()
-
-
 class Section(models.Model):
     SECTION_CHOICES = [
         ('A', 'A'),
@@ -471,101 +452,48 @@ class TimetableEntry(models.Model):
 
 class Student(models.Model):
     #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    sr_no = models.CharField(max_length=20)
-    srn = models.CharField(max_length=20)
+    srn = models.CharField(max_length=11,blank=True, null=True)
     school_code = models.CharField(max_length=20, blank=True, null=True)
     school_name = models.CharField(max_length=255, blank=True, null=True)
-    admission_date = models.DateField()
-    class_field = models.CharField(max_length=20)
+    admission_date = models.DateField(blank=True, null=True,)
+    studentclass = models.CharField(max_length=20,blank=True, null=True)
     stream = models.CharField(max_length=20,blank=True, null=True)
-    section = models.CharField(max_length=20)
-    roll_number = models.CharField(max_length=20)
-    admission_number = models.CharField(max_length=20)
-    title = models.CharField(max_length=10, blank=True, null=True)
-    full_name_aadhar = models.CharField(max_length=255)
-    name_in_local_language = models.CharField(max_length=255, blank=True, null=True)
-    date_of_birth = models.DateField()
-    gender = models.CharField(max_length=10)
+    section = models.CharField(max_length=20,blank=True, null=True)
+    roll_number = models.CharField(max_length=20,blank=True, null=True)
+    admission_number = models.CharField(max_length=20,blank=True, null=True)
+    full_name_aadhar = models.CharField(max_length=255,blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    gender = models.CharField(max_length=10,blank=True, null=True)
     aadhaar_number = models.CharField(max_length=20, blank=True, null=True)
-    eid_number = models.CharField(max_length=20, blank=True, null=True)
-    domicile_of_haryana = models.BooleanField(default=False)
-    nationality = models.CharField(max_length=100, blank=True, null=True)
-    birth_country = models.CharField(max_length=255, blank=True, null=True)
-    birth_state = models.CharField(max_length=255, blank=True, null=True)
-    birth_district = models.CharField(max_length=255, blank=True, null=True)
-    birth_sub_district = models.CharField(max_length=100, blank=True, null=True)
-    birth_city_village_town = models.CharField(max_length=255, blank=True, null=True)
-    is_father_alive = models.BooleanField(default=True)
-    father_title = models.CharField(max_length=10, blank=True, null=True)
-    father_full_name_aadhar = models.CharField(max_length=255)
+    domicile_of_haryana = models.CharField(max_length=100, blank=True, null=True)
+    father_full_name_aadhar = models.CharField(max_length=255,blank=True, null=True)
     father_aadhaar_number = models.CharField(max_length=20, blank=True, null=True)
-    is_father_unclean_occupation = models.BooleanField(default=False)
-    father_occupation = models.CharField(max_length=100, blank=True, null=True)
-    father_highest_qualification = models.CharField(max_length=100, blank=True, null=True)
-    father_pan = models.CharField(max_length=20, blank=True, null=True)
-    is_father_income_tax_payer = models.BooleanField(default=False)
-    is_mother_alive = models.BooleanField(default=True)
-    mother_title = models.CharField(max_length=10, blank=True, null=True)
-    mother_full_name_aadhar = models.CharField(max_length=255)
-    mother_aadhaar_number = models.CharField(max_length=20, blank=True, null=True)
-    is_mother_unclean_occupation = models.BooleanField(default=False)
-    mother_occupation = models.CharField(max_length=100, blank=True, null=True)
-    mother_highest_qualification = models.CharField(max_length=100, blank=True, null=True)
-    mother_pan = models.CharField(max_length=20, blank=True, null=True)
-    is_mother_tax_payer = models.BooleanField(default=False,)
-    guardian_title = models.CharField(max_length=10, blank=True, null=True)
+    mother_full_name_aadhar = models.CharField(max_length=255,blank=True, null=True)
+    mother_aadhaar_number = models.CharField(max_length=20,blank=True, null=True)
     guardian_full_name_aadhar = models.CharField(max_length=255, blank=True, null=True)
     guardian_aadhaar_number = models.CharField(max_length=20, blank=True, null=True)
-    guardian_occupation = models.CharField(max_length=100, blank=True, null=True)
     family_annual_income = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
-    bpl_certificate_number = models.CharField(max_length=20, blank=True, null=True)
-    bpl_certificate_issuing_authority = models.CharField(max_length=255, blank=True, null=True)
-    bpl_certificate_issued_date = models.DateField(blank=True, null=True)
-    sibling_srn = models.CharField(max_length=20, blank=True, null=True)
-    sibling_legal_full_name = models.CharField(max_length=255, blank=True, null=True)
-    sibling_date_of_birth = models.DateField(blank=True, null=True)
-    sibling_class = models.CharField(max_length=20, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
-    contact = models.CharField(max_length=255, blank=True, null=True)
-    country = models.CharField(max_length=255, blank=True, null=True)
     state = models.CharField(max_length=255, blank=True, null=True)
     district = models.CharField(max_length=255, blank=True, null=True)
     block = models.CharField(max_length=100, blank=True, null=True)
     sub_district = models.CharField(max_length=100, blank=True, null=True)
     city_village_town = models.CharField(max_length=100, blank=True, null=True)
-    address_line1 = models.CharField(max_length=255, blank=True, null=True)
-    address_line2 = models.CharField(max_length=255, blank=True, null=True)
-    address_line3 = models.CharField(max_length=255, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
     postal_code = models.CharField(max_length=20, blank=True, null=True)
-    father_email = models.EmailField(blank=True, null=True)
-    father_mobile_no = models.CharField(max_length=20, blank=True, null=True)
-    mother_email = models.EmailField(blank=True, null=True)
-    mother_mobile_no = models.CharField(max_length=20, blank=True, null=True)
-    guardian_email = models.EmailField(blank=True, null=True)
-    guardian_mobile_no = models.CharField(max_length=20, blank=True, null=True)
-    name_on_passbook = models.CharField(max_length=255, blank=True, null=True)
+    father_mobile = models.CharField(max_length=20, blank=True, null=True)
+    mother_mobile = models.CharField(max_length=20, blank=True, null=True)
+    guardian_mobile = models.CharField(max_length=20, blank=True, null=True)
     account_number = models.CharField(max_length=50, blank=True, null=True)
-    account_type = models.CharField(max_length=20, blank=True, null=True)
-    account_status = models.CharField(max_length=20, blank=True, null=True)
-    joint_account_holder_name = models.CharField(max_length=255, blank=True, null=True)
-    joint_account_holder_relation = models.CharField(max_length=50, blank=True, null=True)
     bank_name = models.CharField(max_length=255, blank=True, null=True)
-    branch_name = models.CharField(max_length=255, blank=True, null=True)
     ifsc = models.CharField(max_length=20, blank=True, null=True)
-    micr_code = models.CharField(max_length=20, blank=True, null=True)
-    branch_address = models.CharField(max_length=255, blank=True, null=True)
-    subjects_opted_by_student = models.CharField(max_length=255, blank=True, null=True)
-    caste_name = models.CharField(max_length=100, blank=True, null=True)
-    category_name = models.CharField(max_length=100, blank=True, null=True)
-    religion_name = models.CharField(max_length=100, blank=True, null=True)
-    caste_certificate_number = models.CharField(max_length=20, blank=True, null=True)
-    caste_certificate_issuing_authority = models.CharField(max_length=255, blank=True, null=True)
-    caste_certificate_issued_date = models.DateField(blank=True, null=True)
+    subjects_opted = models.CharField(max_length=255, blank=True, null=True)
+    caste = models.CharField(max_length=100, blank=True, null=True)
+    category = models.CharField(max_length=100, blank=True, null=True)
     disability = models.BooleanField(default=False, blank=True, null=True)
-    disorder_name = models.CharField(max_length=100, blank=True, null=True)
+    disorder = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return str(self.full_name_aadhar) if self.full_name_aadhar else 'Student {}'.format(self.pk)
 
 
 class Topper(models.Model):
