@@ -452,7 +452,7 @@ class TimetableEntry(models.Model):
 
 class Student(models.Model):
     #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    srn = models.CharField(max_length=11,blank=True, null=True)
+    srn = models.CharField(primary_key=True,max_length=11)
     school_code = models.CharField(max_length=20, blank=True, null=True)
     school_name = models.CharField(max_length=255, blank=True, null=True)
     admission_date = models.DateField(blank=True, null=True,)

@@ -33,7 +33,7 @@ from .models import TimetableEntry
 from .models import Student
 from .models import Topper
 from .models import Book
-
+import logging
 
  
 admin.site.site_header="Admin Panel PM SHRI GSSS NAGPUR" 
@@ -93,14 +93,10 @@ class StudentResource(resources.ModelResource):
     
     class Meta:
         model = Student
-        skip_unchanged = True
-        report_skipped = False
-        fields = ('id','srno','srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number','admission_date','title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town',) 
-        #export_order = ('id','sr','admission_date')
-        #use_id=False
-        #skip_unchanged = True
-        #report_skipped = False
-        #import_id_fields = ('srn','student_class','section'.'rollno')  # Specify the unique identifier for each record
+        #exclude = ('id',)
+        fields = ('srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number','admission_date','title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town',) 
+        import_id_fields = ['srn']
+        export_order = ('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile')
         #widgets = {
         #    'admission_date': {'format': '%d/%m/%Y'},  # Format for date fields
         #    'date_of_birth': {'format': '%d/%m/%Y'},  # Format for date fields
@@ -109,28 +105,31 @@ class StudentResource(resources.ModelResource):
         #    # Widgets for boolean fields
        
         #}       
+    
     def before_import_row(self, row, **kwargs):
         try:
-            row['Date of Birth'] = self.reformat_date(row['Date of Birth'])
-            row['Admission Date'] = self.reformat_date(row['Admission Date'])
-        except ValueError:
-            # Handle invalid date gracefully (e.g., log errors, provide default values)
-            pass  # Or raise an exception
+            if 'Date of Birth' in row and row['Date of Birth']:
+                row['Date of Birth'] = self.reformat_date(row['Date of Birth'])
+            if 'Admission Date' in row and row['Admission Date']:
+                row['Admission Date'] = self.reformat_date(row['Admission Date'])
+        except ValueError as e:
+            logging.error(f"Error converting date: {e}. Row: {row}")
 
     def reformat_date(self, date_str):
         try:
-            original_format = "%m/%d/%Y,%H%M%S"  # Adjust if necessary
+            original_format = "%m/%d/%Y %H:%M:%S"  # Adjust format for date with time
             date_obj = datetime.datetime.strptime(date_str, original_format)
             return date_obj.strftime("%Y-%m-%d")
-        except ValueError:
+        except ValueError as e:
+            logging.error(f"Error parsing date '{date_str}': {e}")
             return None  # Or provide a default value
-
+        
 class StudentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     
     resource_class=StudentResource
     list_display=('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile')
 
-    #admin.site.register(User)  
+    
     
 class DayResource(resources.ModelResource):
     name = fields.Field(attribute='name',column_name='name')
@@ -142,7 +141,8 @@ class DayResource(resources.ModelResource):
 class DayAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display=('id','name')
     resource_class=DayResource
-
+    
+#admin.site.register(User)  
 admin.site.register(School)
 admin.site.register(Affiliation)
 admin.site.register(Facility)
