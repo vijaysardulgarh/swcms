@@ -489,7 +489,7 @@ class Student(models.Model):
     subjects_opted = models.CharField(max_length=255, blank=True, null=True)
     caste = models.CharField(max_length=100, blank=True, null=True)
     category = models.CharField(max_length=100, blank=True, null=True)
-    disability = models.BooleanField(default=False, blank=True, null=True)
+    disability = models.CharField(max_length=255,blank=True, null=True)
     disorder = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):

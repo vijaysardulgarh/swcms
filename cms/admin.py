@@ -95,7 +95,7 @@ class StudentResource(resources.ModelResource):
         model = Student
         skip_unchanged = True
         report_skipped = False
-        fields = ('id','srno','srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number', 'title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town',) 
+        fields = ('id','srno','srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number','admission_date','title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town',) 
         #export_order = ('id','sr','admission_date')
         #use_id=False
         #skip_unchanged = True
@@ -128,7 +128,7 @@ class StudentResource(resources.ModelResource):
 class StudentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     
     resource_class=StudentResource
-    list_display=('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','gender','aadhaar_number','category','admission_number','father_mobile')
+    list_display=('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile')
 
     #admin.site.register(User)  
     
