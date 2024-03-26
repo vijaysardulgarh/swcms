@@ -4,6 +4,7 @@ from import_export.admin import ExportActionMixin
 from import_export.admin import ImportExportModelAdmin
 from import_export import resources, fields
 from import_export.widgets import DateWidget, BooleanWidget
+import datetime
 #from import_export.widgets import DateWidget
 #from .models import User
 from .models import School
@@ -60,7 +61,7 @@ class StudentResource(resources.ModelResource):
     aadhaar_number = fields.Field(attribute='aadhaar_number',column_name='Aadhaar Number (If any)')
     category = fields.Field(attribute='category', column_name='Category Name')
     admission_number = fields.Field(attribute='admission_number',column_name='Admission Number')
-    admission_date = fields.Field(attribute='admission_date',column_name='Admission Date',widget=DateWidget(format='%Y/%m/%d'))
+    admission_date = fields.Field(attribute='admission_date',column_name='Admission Date')
     father_mobile = fields.Field(attribute='father_mobile',column_name="Father's Mobile No")
     mother_mobile = fields.Field(attribute='mother_mobile', column_name="Mother's Mobile No")
     bank_name = fields.Field(attribute='bank_name', column_name='Bank Name')
@@ -107,13 +108,30 @@ class StudentResource(resources.ModelResource):
         #    'sibling_date_of_birth': {'format': '%d/%m/%Y'},  # Format for date fields
         #    # Widgets for boolean fields
        
-        #}
+        #}       
+    def before_import_row(self, row, **kwargs):
+        try:
+            row['Date of Birth'] = self.reformat_date(row['Date of Birth'])
+            row['Admission Date'] = self.reformat_date(row['Admission Date'])
+        except ValueError:
+            # Handle invalid date gracefully (e.g., log errors, provide default values)
+            pass  # Or raise an exception
+
+    def reformat_date(self, date_str):
+        try:
+            original_format = "%m/%d/%Y,%H%M%S"  # Adjust if necessary
+            date_obj = datetime.datetime.strptime(date_str, original_format)
+            return date_obj.strftime("%Y-%m-%d")
+        except ValueError:
+            return None  # Or provide a default value
+
 class StudentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     
     resource_class=StudentResource
     list_display=('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','gender','aadhaar_number','category','admission_number','father_mobile')
 
     #admin.site.register(User)  
+    
 class DayResource(resources.ModelResource):
     name = fields.Field(attribute='name',column_name='name')
     class Meta:
