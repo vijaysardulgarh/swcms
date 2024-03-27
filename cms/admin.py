@@ -61,7 +61,7 @@ class StaffResource(resources.ModelResource):
 
     class Meta:
         model = Staff
-        fields=('id','name',"father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number")
+        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number","subject","staff_role","employment_type","designation")
 
     def before_import_row(self, row, **kwargs):
         try:
@@ -82,7 +82,7 @@ class StaffResource(resources.ModelResource):
             return None  # Or provide a default value
         
 class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number")
+    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number","subject","staff_role","employment_type","designation")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
     
