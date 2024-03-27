@@ -41,7 +41,7 @@ admin.site.site_title="hi"
 admin.site.index_title="welcome"
 class StaffResource(resources.ModelResource):
     employee_id = fields.Field(attribute='employee_id',column_name='Employee ID')
-    name = fields.Field(attribute='name',column_name='SRN')
+    name = fields.Field(attribute='name',column_name='Employee Name [ID]')
     father_name = fields.Field(attribute='father_name',column_name="Father's Name")
     mother_name = fields.Field(attribute='mother_name',column_name="Mother's Name")
     spouse_name = fields.Field(attribute='spouse_name',column_name='Spouse Name')
@@ -74,7 +74,7 @@ class StaffResource(resources.ModelResource):
 
     def reformat_date(self, date_str):
         try:
-            original_format = "%m/%d/%Y %H:%M:%S"  # Adjust format for date with time
+            original_format = "%b %dth %Y"  # Adjust format for date with time
             date_obj = datetime.datetime.strptime(date_str, original_format)
             return date_obj.strftime("%Y-%m-%d")
         except ValueError as e:
@@ -82,7 +82,7 @@ class StaffResource(resources.ModelResource):
             return None  # Or provide a default value
         
 class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display =("name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number")
+    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
     
