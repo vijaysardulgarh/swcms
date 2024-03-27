@@ -292,7 +292,7 @@ class Subject(models.Model):
 class Staff(models.Model):
   #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
   employee_id = models.CharField(max_length=20, unique=True)
-  school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='staff')
+  #school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='staff')
   name = models.CharField(max_length=50)
   father_name = models.CharField(max_length=255, blank=True)
   mother_name = models.CharField(max_length=255, blank=True)
@@ -303,6 +303,7 @@ class Staff(models.Model):
         ('O', 'Other'),
     )
   gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+  designation = models.CharField(max_length=15, blank=True)
   CATEGORY_CHOICES = (
     ('GEN', 'General'),
     ('SC', 'Scheduled Caste'),
@@ -317,7 +318,7 @@ class Staff(models.Model):
   retirement_date = models.DateField(null=True, blank=True)
   
   email = models.EmailField(unique=True, blank=True)
-  phone_number = models.CharField(max_length=15, blank=True)
+  mobile_number = models.CharField(max_length=15, blank=True)
   subject = models.CharField(max_length=50, blank=True)
   profile_picture = models.ImageField(upload_to='staff_profile/', blank=True)
   STAFF_ROLE_CHOICES = [

@@ -40,24 +40,49 @@ admin.site.site_header="Admin Panel PM SHRI GSSS NAGPUR"
 admin.site.site_title="hi"
 admin.site.index_title="welcome"
 class StaffResource(resources.ModelResource):
+    employee_id = fields.Field(attribute='employee_id',column_name='Employee ID')
     name = fields.Field(attribute='name',column_name='SRN')
     father_name = fields.Field(attribute='father_name',column_name="Father's Name")
     mother_name = fields.Field(attribute='mother_name',column_name="Mother's Name")
     spouse_name = fields.Field(attribute='spouse_name',column_name='Spouse Name')
     gender = fields.Field(attribute='gender',column_name='Gender')
+    designation = fields.Field(attribute='designation',column_name='Designation')
     category = fields.Field(attribute='category',column_name='Category')
     date_of_birth = fields.Field(attribute='date_of_birth',column_name='Date of Birth')
     joining_date = fields.Field(attribute='joining_date',column_name='Date of Joining School/Office')
-    retirement_date = fields.Field(attribute='retirement_date',column_name='SRN')
-    subject = fields.Field(attribute='subject',column_name='SRN')
-    email = fields.Field(attribute='email',column_name='SRN')
-    phone_number = fields.Field(attribute='phone_number',column_name='SRN')
+    retirement_date = fields.Field(attribute='retirement_date',column_name='Retirement Date')
+    subject = fields.Field(attribute='subject',column_name='Subject')
+    email = fields.Field(attribute='email',column_name='Email ID')
+    mobile_number = fields.Field(attribute='phone_number',column_name='Mobile Number')
+    subject = fields.Field(attribute='phone_number',column_name='Subject')
+    staff_role = fields.Field(attribute='staff_role',column_name='Staff Role')
+    employment_type = fields.Field(attribute='employment_type',column_name='Employment Type')
+    designation = fields.Field(attribute='designation',column_name='Designation')
 
     class Meta:
         model = Staff
-        fields=('name',"father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","phone_number")
+        fields=('id','name',"father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number")
+
+    def before_import_row(self, row, **kwargs):
+        try:
+            if 'Date of Birth' in row and row['Date of Birth']:
+                row['Date of Birth'] = self.reformat_date(row['Date of Birth'])
+            if 'Date of Joining School/Office' in row and row['Date of Joining School/Office']:
+                row['Date of Joining School/Office'] = self.reformat_date(row['Date of Joining School/Office'])
+        except ValueError as e:
+            logging.error(f"Error converting date: {e}. Row: {row}")
+
+    def reformat_date(self, date_str):
+        try:
+            original_format = "%m/%d/%Y %H:%M:%S"  # Adjust format for date with time
+            date_obj = datetime.datetime.strptime(date_str, original_format)
+            return date_obj.strftime("%Y-%m-%d")
+        except ValueError as e:
+            logging.error(f"Error parsing date '{date_str}': {e}")
+            return None  # Or provide a default value
+        
 class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display =("name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","phone_number")
+    list_display =("name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
     
