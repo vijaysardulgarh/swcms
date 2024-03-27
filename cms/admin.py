@@ -46,22 +46,25 @@ class StaffResource(resources.ModelResource):
     mother_name = fields.Field(attribute='mother_name',column_name="Mother's Name")
     spouse_name = fields.Field(attribute='spouse_name',column_name='Spouse Name')
     gender = fields.Field(attribute='gender',column_name='Gender')
+    aadhar_number = fields.Field(attribute='aadhar_number',column_name='Aadhar No')
     designation = fields.Field(attribute='designation',column_name='Designation')
     category = fields.Field(attribute='category',column_name='Category')
     date_of_birth = fields.Field(attribute='date_of_birth',column_name='Date of Birth')
     joining_date = fields.Field(attribute='joining_date',column_name='Date of Joining School/Office')
+    current__joining_date = fields.Field(attribute='current_joining_date',column_name='Date of Joining School/Office')
     retirement_date = fields.Field(attribute='retirement_date',column_name='Retirement Date')
     subject = fields.Field(attribute='subject',column_name='Subject')
     email = fields.Field(attribute='email',column_name='Email ID')
     mobile_number = fields.Field(attribute='phone_number',column_name='Mobile Number')
-    subject = fields.Field(attribute='phone_number',column_name='Subject')
+    teaching_subject_1 = fields.Field(attribute='teaching_subject_1',column_name='Teaching Subject 1')
+    teaching_subject_2 = fields.Field(attribute='teaching_subject_1',column_name='Teaching Subject 2')
     staff_role = fields.Field(attribute='staff_role',column_name='Staff Role')
     employment_type = fields.Field(attribute='employment_type',column_name='Employment Type')
     designation = fields.Field(attribute='designation',column_name='Designation')
 
     class Meta:
         model = Staff
-        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number","subject","staff_role","employment_type","designation")
+        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","teaching_subject_1","teaching_subject_1","email","mobile_number","subject","staff_role","employment_type","designation")
 
     def before_import_row(self, row, **kwargs):
         try:
@@ -74,7 +77,7 @@ class StaffResource(resources.ModelResource):
 
     def reformat_date(self, date_str):
         try:
-            original_format = "%b %dth %Y"  # Adjust format for date with time
+            original_format = "%Y-%m-%d"  # Adjust format for date with time
             date_obj = datetime.datetime.strptime(date_str, original_format)
             return date_obj.strftime("%Y-%m-%d")
         except ValueError as e:
@@ -82,7 +85,7 @@ class StaffResource(resources.ModelResource):
             return None  # Or provide a default value
         
 class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","mobile_number","subject","staff_role","employment_type","designation")
+    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","email","mobile_number","teaching_subject_1","teaching_subject_2","staff_role","employment_type","designation")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
     

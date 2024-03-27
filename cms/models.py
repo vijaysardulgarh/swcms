@@ -294,16 +294,17 @@ class Staff(models.Model):
   employee_id = models.CharField(max_length=20, unique=True,blank=True, null=True)
   #school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='staff')
   name = models.CharField(max_length=50)
-  father_name = models.CharField(max_length=255, blank=True)
-  mother_name = models.CharField(max_length=255, blank=True)
-  spouse_name = models.CharField(max_length=255, blank=True) 
+  father_name = models.CharField(max_length=50, null=True,blank=True)
+  mother_name = models.CharField(max_length=50,null=True, blank=True)
+  spouse_name = models.CharField(max_length=50, null=True,blank=True) 
   GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
+        ('MALE', 'Male'),
+        ('FEMALE', 'Female'),
+        ('OTHER', 'Other'),
     )
-  gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-  designation = models.CharField(max_length=40, blank=True)
+  gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+  aadhar_number = models.CharField(max_length=12, unique=True,null=True, blank=True)
+  designation = models.CharField(max_length=40,null=True, blank=True)
   CATEGORY_CHOICES = (
     ('GEN', 'General'),
     ('SC', 'Scheduled Caste'),
@@ -312,15 +313,17 @@ class Staff(models.Model):
     ('EWS', 'Economically Weaker Section'),
     ('OTHER', 'Other'),
     )
-  category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, blank=True)
+  category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, null=True,blank=True)
   date_of_birth = models.DateField(null=True, blank=True)
   joining_date = models.DateField(null=True, blank=True)
+  current_joining_date = models.DateField(null=True, blank=True)
   retirement_date = models.DateField(null=True, blank=True)
   
   email = models.EmailField(unique=True, blank=True,null=True)
-  mobile_number = models.CharField(max_length=15, blank=True)                                                                                                                       
-  subject = models.CharField(max_length=50, blank=True)
-  profile_picture = models.ImageField(upload_to='staff_profile/', blank=True)
+  mobile_number = models.CharField(max_length=15, null=True,blank=True)                                                                                                                       
+  teaching_subject_1 = models.CharField(max_length=50, null=True,blank=True)
+  teaching_subject_2 = models.CharField(max_length=50, null=True,blank=True)
+  profile_picture = models.ImageField(upload_to='staff_profile/', null=True,blank=True)
   STAFF_ROLE_CHOICES = [
     ('teaching', 'Teaching'),
     ('non_teaching', 'Non-Teaching'),
@@ -333,6 +336,7 @@ class Staff(models.Model):
     ('guest', 'Guest'),
     ('hkrnl', 'HKRNL'),
     ('nsqf', 'NSQF'),
+    ('mdmworker', 'MDM Worker'),
     ('other', 'Other'),
 ]
   employment_type = models.CharField(max_length=20, choices=EMPLOYMENT_TYPE_CHOICES)
