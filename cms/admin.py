@@ -40,10 +40,23 @@ admin.site.site_header="Admin Panel PM SHRI GSSS NAGPUR"
 admin.site.site_title="hi"
 admin.site.index_title="welcome"
 class StaffResource(resources.ModelResource):
+    name = fields.Field(attribute='name',column_name='SRN')
+    father_name = fields.Field(attribute='father_name',column_name="Father's Name")
+    mother_name = fields.Field(attribute='mother_name',column_name="Mother's Name")
+    spouse_name = fields.Field(attribute='spouse_name',column_name='Spouse Name')
+    gender = fields.Field(attribute='gender',column_name='Gender')
+    category = fields.Field(attribute='category',column_name='Category')
+    date_of_birth = fields.Field(attribute='date_of_birth',column_name='Date of Birth')
+    joining_date = fields.Field(attribute='joining_date',column_name='Date of Joining School/Office')
+    retirement_date = fields.Field(attribute='retirement_date',column_name='SRN')
+    subject = fields.Field(attribute='subject',column_name='SRN')
+    email = fields.Field(attribute='email',column_name='SRN')
+    phone_number = fields.Field(attribute='phone_number',column_name='SRN')
+
     class Meta:
         model = Staff
         fields=('name',"father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","phone_number")
-class StaffAdmin(ExportActionMixin,admin.ModelAdmin):
+class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display =("name","father_name","mother_name","spouse_name","gender","category","date_of_birth","joining_date","retirement_date","subject","email","phone_number")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
