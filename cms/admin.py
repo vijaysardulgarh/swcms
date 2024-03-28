@@ -206,17 +206,23 @@ class TimetableResource(resources.ModelResource):
     day = fields.Field(attribute='day',column_name='Subject')
     start_time = fields.Field(attribute='start_time',column_name='Subject')
     end_time = fields.Field(attribute='end_time',column_name='Subject')
+    class_name = fields.Field(attribute='class_name',column_name='Class')
+    section = fields.Field(attribute='section',column_name='Section')
     #classrooms = fields.Field(attribute='classrooms',column_name='Subject')
-    #teachers = fields.Field(attribute='teachers',column_name='Teachers')
+    teachers = fields.Field(attribute='teachers',column_name='Teachers')
     #slot = fields.Field(attribute='slot',column_name='Slot')
 
     class Meta:
         model = TimetableEntry
-        fields=('class_name','section','day','start_time','end_time','subject')
+        fields=('day','start_time','end_time','class_name','section','subject','teachers')
         #use_id=False
 
 class TimetableAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display=('class_name','section','day','start_time','end_time','subject')
+    list_display=('day','start_time','end_time','class_name','section','subject','teacher_name')
+
+    def teacher_name(self, obj):
+        return obj.teachers.name
+    
     resource_class=TimetableResource        
     
 #admin.site.register(User)  
