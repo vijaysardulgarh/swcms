@@ -182,6 +182,42 @@ class DayResource(resources.ModelResource):
 class DayAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display=('id','name')
     resource_class=DayResource
+
+class TimetableEntryResource(resources.ModelResource):
+    section = fields.Field(attribute='section',column_name='Section')
+    subject = fields.Field(attribute='subject',column_name='Subject')
+    teacher = fields.Field(attribute='teacher',column_name='Teacher')
+    slot = fields.Field(attribute='slot',column_name='Slot')
+
+    class Meta:
+        model = TimetableEntry
+        fields=('section','subject','teacher','slot')
+        #use_id=False
+
+class TimetableEntryAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display=('section','subject','teacher','slot')
+    resource_class=TimetableEntryResource    
+
+
+class TimetableResource(resources.ModelResource):
+    class_name = fields.Field(attribute='class_name',column_name='Class')
+    section = fields.Field(attribute='section',column_name='Section')
+    subject = fields.Field(attribute='subject',column_name='Subject')
+    day = fields.Field(attribute='day',column_name='Subject')
+    start_time = fields.Field(attribute='start_time',column_name='Subject')
+    end_time = fields.Field(attribute='end_time',column_name='Subject')
+    #classrooms = fields.Field(attribute='classrooms',column_name='Subject')
+    #teachers = fields.Field(attribute='teachers',column_name='Teachers')
+    #slot = fields.Field(attribute='slot',column_name='Slot')
+
+    class Meta:
+        model = TimetableEntry
+        fields=('class_name','section','day','start_time','end_time','subject')
+        #use_id=False
+
+class TimetableAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display=('class_name','section','day','start_time','end_time','subject')
+    resource_class=TimetableResource        
     
 #admin.site.register(User)  
 admin.site.register(School)
@@ -203,10 +239,10 @@ admin.site.register(Subject)
 admin.site.register(Staff,StaffAdmin)
 admin.site.register(Classroom)
 admin.site.register(ClassIncharge)
-admin.site.register(Timetable)
-admin.site.register(Day)
+admin.site.register(Timetable,TimetableAdmin)
+admin.site.register(Day,DayAdmin)
 admin.site.register(TimetableSlot)
-admin.site.register(TimetableEntry)
+admin.site.register(TimetableEntry,TimetableEntryAdmin)
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Topper)
 admin.site.register(Book)
