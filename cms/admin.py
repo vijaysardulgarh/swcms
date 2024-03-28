@@ -64,7 +64,7 @@ class StaffResource(resources.ModelResource):
 
     class Meta:
         model = Staff
-        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","teaching_subject_1","teaching_subject_1","email","mobile_number","subject","staff_role","employment_type","designation")
+        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","teaching_subject_1","teaching_subject_2","email","mobile_number","subject","staff_role","employment_type","designation")
 
     def before_import_row(self, row, **kwargs):
         try:
@@ -85,7 +85,7 @@ class StaffResource(resources.ModelResource):
             return None  # Or provide a default value
         
 class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","email","mobile_number","teaching_subject_1","teaching_subject_2","staff_role","employment_type","designation")
+    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","email","mobile_number","teaching_subject_1","staff_role","employment_type","designation")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
     
@@ -204,21 +204,22 @@ class TimetableResource(resources.ModelResource):
     section = fields.Field(attribute='section',column_name='Section')
     subject = fields.Field(attribute='subject',column_name='Subject')
     day = fields.Field(attribute='day',column_name='Subject')
+    period=fields.Field(attribute="period",column_name="Period")
     start_time = fields.Field(attribute='start_time',column_name='Subject')
     end_time = fields.Field(attribute='end_time',column_name='Subject')
     class_name = fields.Field(attribute='class_name',column_name='Class')
     section = fields.Field(attribute='section',column_name='Section')
     #classrooms = fields.Field(attribute='classrooms',column_name='Subject')
-    teachers = fields.Field(attribute='teachers',column_name='Teachers')
+    teachers = fields.Field(attribute='teachers',column_name='Teachers' )
     #slot = fields.Field(attribute='slot',column_name='Slot')
 
     class Meta:
-        model = TimetableEntry
-        fields=('day','start_time','end_time','class_name','section','subject','teachers')
+        model = Timetable
+        fields=('day','period','start_time','end_time','class_name','section','subject','teachers')
         #use_id=False
 
 class TimetableAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display=('day','start_time','end_time','class_name','section','subject','teacher_name')
+    list_display=('day','period','start_time','end_time','class_name','section','subject','teacher_name')
 
     def teacher_name(self, obj):
         return obj.teachers.name

@@ -288,7 +288,15 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+class ClassSubject(models.Model):
+    class_info = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    periods_per_week = models.IntegerField()
+    # Add fields for subject-specific requirements
 
+    def __str__(self):
+        return f"{self.class_info} - {self.subject}"
+    
 class Staff(models.Model):
   #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
   employee_id = models.CharField(max_length=20, unique=True,blank=True, null=True)
@@ -318,11 +326,11 @@ class Staff(models.Model):
   joining_date = models.DateField(null=True, blank=True)
   current_joining_date = models.DateField(null=True, blank=True)
   retirement_date = models.DateField(null=True, blank=True)
-  
+  subject = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='Staff',null=True, blank=True)
   email = models.EmailField(unique=True, blank=True,null=True)
   mobile_number = models.CharField(max_length=15, null=True,blank=True)                                                                                                                       
-  teaching_subject_1 = models.CharField(max_length=50, null=True,blank=True)
-  teaching_subject_2 = models.CharField(max_length=50, null=True,blank=True)
+  teaching_subject_1 = models.CharField(max_length=15,null=True, blank=True)
+  #teaching_subject_2 = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='Staff')
   profile_picture = models.ImageField(upload_to='staff_profile/', null=True,blank=True)
   STAFF_ROLE_CHOICES = [
     ('teaching', 'Teaching'),
@@ -352,6 +360,7 @@ class Staff(models.Model):
 class Classroom(models.Model):
     name = models.CharField(max_length=100)
     capacity = models.PositiveIntegerField()
+    location = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -395,15 +404,17 @@ class Timetable(models.Model):
 
     
     season = models.CharField(max_length=10, choices=SEASON_CHOICES)
-    class_name = models.ForeignKey('Class', on_delete=models.PROTECT, related_name='Timetable')
-    section = models.ForeignKey('Section', on_delete=models.PROTECT, related_name='timetable')
+    class_name = models.ForeignKey('Class', on_delete=models.CASCADE,related_name='rrrr')
+    section = models.ForeignKey('Section', on_delete=models.CASCADE, related_name='rr')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     class_type = models.CharField(max_length=10, choices=CLASS_TYPE_CHOICES, default='Regular')
-    teachers = models.ManyToManyField(Staff, blank=True)
+    teachers = models.ManyToManyField(Staff, blank=True,limit_choices_to={'subject__in': models.OuterRef('subject')})
     classrooms = models.ManyToManyField(Classroom, blank=True)
     day = models.CharField(max_length=10, choices=DAY_CHOICES)
+    period = models.IntegerField()
     start_time = models.TimeField()
     end_time = models.TimeField()
+
     is_mandatory = models.BooleanField(default=True)
  
 
