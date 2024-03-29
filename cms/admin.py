@@ -172,16 +172,16 @@ class StudentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 
     
     
-class DayResource(resources.ModelResource):
+class TimetableSlotResource(resources.ModelResource):
     name = fields.Field(attribute='name',column_name='name')
     class Meta:
-        model = Day
-        fields=('id','name')
+        model = TimetableSlot
+        fields=('season','day','period','start_time','end_time')
         #use_id=False
 
-class DayAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display=('id','name')
-    resource_class=DayResource
+class TimetableSlotAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display=('season','day','period','start_time','end_time')
+    resource_class=TimetableSlotResource
 
 class TimetableEntryResource(resources.ModelResource):
     section = fields.Field(attribute='section',column_name='Section')
@@ -247,8 +247,7 @@ admin.site.register(Staff,StaffAdmin)
 admin.site.register(Classroom)
 admin.site.register(ClassIncharge)
 admin.site.register(Timetable,TimetableAdmin)
-admin.site.register(Day,DayAdmin)
-admin.site.register(TimetableSlot)
+admin.site.register(TimetableSlot,TimetableSlotAdmin)
 admin.site.register(TimetableEntry,TimetableEntryAdmin)
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Topper)

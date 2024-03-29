@@ -328,9 +328,9 @@ class Staff(models.Model):
   retirement_date = models.DateField(null=True, blank=True)
   subject = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='Staff',null=True, blank=True)
   email = models.EmailField(unique=True, blank=True,null=True)
-  mobile_number = models.CharField(max_length=15, null=True,blank=True)                                                                                                                       
-  teaching_subject_1 = models.CharField(max_length=15,null=True, blank=True)
-  #teaching_subject_2 = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='Staff')
+  mobile_number = models.CharField(max_length=15, null=True,blank=True)     
+  teaching_subject_1 = models.ForeignKey(Subject, on_delete=models.SET_NULL, related_name='teachers_1', null=True, blank=True)
+  teaching_subject_2 = models.ForeignKey(Subject, on_delete=models.SET_NULL, related_name='teachers_2', null=True, blank=True)                                                                                                                  
   profile_picture = models.ImageField(upload_to='staff_profile/', null=True,blank=True)
   STAFF_ROLE_CHOICES = [
     ('teaching', 'Teaching'),
@@ -373,26 +373,33 @@ class ClassIncharge(models.Model):
     def __str__(self):
         return f"{self.teacher.name} - {self.classroom.name} - {self.class_alloted} - {self.section}"
     
-class Timetable(models.Model):
-
-
+class TimetableSlot(models.Model):
+    DAY_CHOICES = [
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+    ]
+    day = models.CharField(max_length=20, choices=DAY_CHOICES)
     SEASON_CHOICES = (
         ('winter', 'winter'),
         ('summer', 'Summer'),
         ('other', 'Other'),
         # Add more semesters as needed
     )
+    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
+    period = models.IntegerField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
 
-    DAY_CHOICES = (
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
-        # Add more days as needed
-    )
+    def __str__(self):
+        return f"{self.day.name} - {self.start_time} - {self.end_time}"    
+    
+
+    
+    
+class Timetable(models.Model):
 
     CLASS_TYPE_CHOICES = (
         ('Regular', 'Regular'),
@@ -403,17 +410,18 @@ class Timetable(models.Model):
     )
 
     
-    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
+    season = models.ForeignKey(TimetableSlot, on_delete=models.SET_NULL, related_name='timetable_season', null=True, blank=True)
     class_name = models.ForeignKey('Class', on_delete=models.CASCADE,related_name='rrrr')
     section = models.ForeignKey('Section', on_delete=models.CASCADE, related_name='rr')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     class_type = models.CharField(max_length=10, choices=CLASS_TYPE_CHOICES, default='Regular')
     teachers = models.ManyToManyField(Staff, blank=True,limit_choices_to={'subject__in': models.OuterRef('subject')})
     classrooms = models.ManyToManyField(Classroom, blank=True)
-    day = models.CharField(max_length=10, choices=DAY_CHOICES)
-    period = models.IntegerField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    day = models.ForeignKey(TimetableSlot, on_delete=models.SET_NULL, related_name='timetable_day', null=True, blank=True)
+    period = models.ForeignKey(TimetableSlot, on_delete=models.SET_NULL, related_name='timetable_period', null=True, blank=True)
+    start_time = models.ForeignKey(TimetableSlot, on_delete=models.SET_NULL, related_name='timetable_start_time', null=True, blank=True)
+    end_time = models.ForeignKey(TimetableSlot, on_delete=models.SET_NULL, related_name='timetable_end_time', null=True, blank=True)
+
 
     is_mandatory = models.BooleanField(default=True)
  
@@ -429,6 +437,8 @@ class Day(models.Model):
         ('Wednesday', 'Wednesday'),
         ('Thursday', 'Thursday'),
         ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
     ]
     name = models.CharField(max_length=20, choices=DAY_CHOICES)
 
@@ -436,14 +446,7 @@ class Day(models.Model):
         return self.name
 
 
-class TimetableSlot(models.Model):
 
-    day = models.ForeignKey(Day, on_delete=models.CASCADE)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-
-    def __str__(self):
-        return f"{self.day.name} - {self.start_time} - {self.end_time}"
 
 class TimetableEntry(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)  # Link to School
