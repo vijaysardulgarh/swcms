@@ -173,7 +173,12 @@ class StudentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     
     
 class TimetableSlotResource(resources.ModelResource):
-    name = fields.Field(attribute='name',column_name='name')
+    season = fields.Field(attribute='season',column_name='Season')
+    day = fields.Field(attribute='day',column_name='Day')
+    period = fields.Field(attribute='period',column_name='Period Count')
+    start_time = fields.Field(attribute='start_time',column_name='Start Time')
+    end_time = fields.Field(attribute='end_time',column_name='End Time')
+
     class Meta:
         model = TimetableSlot
         fields=('season','day','period','start_time','end_time')
