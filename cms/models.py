@@ -374,6 +374,14 @@ class ClassIncharge(models.Model):
         return f"{self.teacher.name} - {self.classroom.name} - {self.class_alloted} - {self.section}"
     
 class TimetableSlot(models.Model):
+    
+    SEASON_CHOICES = (
+        ('winter', 'winter'),
+        ('summer', 'Summer'),
+        ('other', 'Other'),
+        # Add more semesters as needed
+    )
+    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
     DAY_CHOICES = [
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),
@@ -382,19 +390,13 @@ class TimetableSlot(models.Model):
         ('Friday', 'Friday'),
     ]
     day = models.CharField(max_length=20, choices=DAY_CHOICES)
-    SEASON_CHOICES = (
-        ('winter', 'winter'),
-        ('summer', 'Summer'),
-        ('other', 'Other'),
-        # Add more semesters as needed
-    )
-    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
+
     period = models.IntegerField()
     start_time = models.TimeField()
     end_time = models.TimeField()
 
     def __str__(self):
-        return f"{self.day.name} - {self.start_time} - {self.end_time}"    
+        return f"{self.period}-{self.day} - {self.start_time} - {self.end_time}"
     
 
     
