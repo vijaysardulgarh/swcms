@@ -1,5 +1,5 @@
 # SIMS
-School Website Content Management System
+School Information Management System
 Author -Vijay Kumar
 
 Create a Folder swcms
