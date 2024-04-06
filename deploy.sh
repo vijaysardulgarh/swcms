@@ -133,9 +133,11 @@ sudo ln -s "$NGINX_CONFIG_DIR/$DOMAIN" "$NGINX_SITES_ENABLED_DIR/$DOMAIN"
 echo "Testing Nginx configuration"
 sudo nginx -t
 
-# Restart Nginx
+# Restart Gunicorn
 echo "Restarting Gunicorn"
 sudo systemctl restart $PROJECT_NAME.gunicorn
+
+# Restart Nginx
 echo "Restarting Nginx"
 sudo systemctl restart nginx
 
