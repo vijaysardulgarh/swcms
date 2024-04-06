@@ -134,8 +134,9 @@ echo "Testing Nginx configuration"
 sudo nginx -t
 
 # Restart Nginx
-echo "Restarting Nginx"
+echo "Restarting Gunicorn"
 sudo systemctl restart $PROJECT_NAME.gunicorn
+echo "Restarting Nginx"
 sudo systemctl restart nginx
 
 echo "Deployment completed successfully!"
