@@ -5,3 +5,7 @@ from .models import Staff
 def index (request):
     staff_members=Staff.objects.all
     return render(request,"index.html",{'staff_members':staff_members})
+
+def about (request):
+    
+    return render(request,"about.html",{})
