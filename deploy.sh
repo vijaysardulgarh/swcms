@@ -135,6 +135,7 @@ sudo nginx -t
 
 # Restart Nginx
 echo "Restarting Nginx"
+sudo systemctl restart $PROJECT_NAME.gunicorn
 sudo systemctl restart nginx
 
 echo "Deployment completed successfully!"
