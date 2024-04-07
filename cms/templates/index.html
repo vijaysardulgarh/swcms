@@ -1,59 +1,27 @@
 {%extends 'base.html'%}
 
-    {% block title %} <title>Hello world</title> 
-    {% endblock title %}
+{% block title %} <title>Hello world</title>
+{% endblock title %}
 
 
-    {% block content %}
+{% block content %}
 
     {% if staff_members %}
-    <table class="table table-bordered table-hover table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Employee ID</th>
-                <th>School</th>
-                <th>Name</th>
-                <th>Father's Name</th>
-                <th>Mother's Name</th>
-                <th>Spouse</th>
-                <th>Gender</th>
-                <th>Category</th>
-                <th>Date of Birth</th>
-                <th>Joining Date</th>
-                <th>Retirement Date</th>
-                <th>Email ID</th>
-                <th>Mobile No</th>
-                <th>Subject</th>
-                <th>Photo</th>
-                <th>Staff Type</th>
-                <th>Employement Type</th>
-            </tr>
-        </thead>
-        <tbody class="striker">
+
+        <ul class="w3-ul w3-card-4">
+            <h2>Our Staff</h2>
             {% for staff_members in staff_members %}
-            <tr>
-                <td>{{ staff.members.employee_id }}</td>
-                <td>{{ staff_members.school }}</td>
-                <td>{{ staff_members.name }}</td>
-                <td>{{ staff_members.father_name }}</td>
-                <td>{{ staff_members.mother_name }}</td>
-                <td>{{ staff_members.spouse_name }}</td>
-                <td>{{ staff_members.gender }}</td>
-                <td>{{ staff_members.category }}</td>
-                <td>{{ staff_members.date_of_birth }}</td>
-                <td>{{ staff_members.joining_date }}</td>
-                <td>{{ staff_members.retirement_date }}</td>
-                <td>{{ staff_members.email }}</td>
-                <td>{{ staff_members.phone_number }}</td>
-                <td>{{ staff_members.subject }}</td>
-                <td>{{ staff_members.profile_picture }}</td>
-                <td>{{ staff_members.staff_role }}</td>
-                <td>{{ staff_members.employment_type }}</td>
+                <li class="w3-bar">
+                    <span onclick="this.parentElement.style.display='none'"
+                    class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                    <img src="https://picsum.photos/64/64" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                     <div class="w3-bar-item">
+                        <span class="w3-large">{{ staff_members.name }}</span><br>
+                        <span>{{ staff_members.designation }}</span>
+                    </div>
+                </li>
+    {% endfor %}
 
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
-
-    {% endblock content%}
+</ul>
+{% endif %}
+{% endblock content%}
