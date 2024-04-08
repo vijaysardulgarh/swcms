@@ -14,6 +14,7 @@ NGINX_SOCKET_FILE="/etc/systemd/system/$PROJECT_NAME.gunicorn.socket"
 NGINX_SERVICE_FILE="/etc/systemd/system/$PROJECT_NAME.gunicorn.service"
 GUNICORN_BIN="$PROJECT_DIR/venv/bin/gunicorn"
 GUNICORN_WSGI="school.wsgi:application"  # Replace with your project's WSGI module
+DATABASE_FILE="$PROJECT_DIR/db.sqlite3"
 
 # Clone or pull project from GitHub
 echo "Cloning or pulling project from GitHub"
@@ -23,6 +24,20 @@ if [ -d "$PROJECT_DIR" ]; then
 else
     git clone $GITHUB_REPO $PROJECT_DIR
 fi
+
+
+# Check if the database file exists
+if [ ! -f "$DATABASE_FILE" ]; then
+    echo "Error: Database file '$DATABASE_FILE' not found."
+    exit 1
+fi
+
+# Change the permissions of the database file
+chmod 664 "$DATABASE_FILE"
+
+echo "Permissions of '$DATABASE_FILE' have been changed successfully."
+
+
 
 # Create virtual environment
 echo "Creating virtual environment"
