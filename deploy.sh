@@ -125,7 +125,7 @@ server {
     }
 
     location /static/ {
-        alias $PROJECT_DIR/static/;
+        alias $PROJECT_DIR/collectstatic/;
     }
 
     location /media/ {
