@@ -36,9 +36,9 @@ from .models import Book
 import logging
 
  
-admin.site.site_header="Admin Panel PM SHRI GSSS NAGPUR" 
-admin.site.site_title="hi"
-admin.site.index_title="welcome"
+admin.site.site_header="School Information Management System (SIMS" 
+admin.site.site_title="SIMS"
+admin.site.index_title="School Information Management System (SIMS)"
 class StaffResource(resources.ModelResource):
     employee_id = fields.Field(attribute='employee_id',column_name='Employee ID')
     name = fields.Field(attribute='name',column_name='Employee Name [ID]')
