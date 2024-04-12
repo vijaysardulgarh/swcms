@@ -306,20 +306,20 @@ class Staff(models.Model):
   mother_name = models.CharField(max_length=50,null=True, blank=True)
   spouse_name = models.CharField(max_length=50, null=True,blank=True) 
   GENDER_CHOICES = (
-        ('MALE', 'Male'),
-        ('FEMALE', 'Female'),
-        ('OTHER', 'Other'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
     )
-  gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+  gender = models.CharField(max_length=6, choices=GENDER_CHOICES,blank=True, null=True)
   aadhar_number = models.CharField(max_length=12, unique=True,null=True, blank=True)
   designation = models.CharField(max_length=40,null=True, blank=True)
   CATEGORY_CHOICES = (
     ('GEN', 'General'),
-    ('SC', 'Scheduled Caste'),
-    ('ST', 'Scheduled Tribe'),
-    ('OBC', 'Other Backward Class'),
-    ('EWS', 'Economically Weaker Section'),
-    ('OTHER', 'Other'),
+    ('SC', 'SC'),
+    ('BC-A', 'BC-A'),
+    ('BC-B', 'BC-B'),
+    ('EWS', 'EWS'),
+    ('OTHER', 'OTHER'),
     )
   category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, null=True,blank=True)
   date_of_birth = models.DateField(null=True, blank=True)
@@ -333,25 +333,28 @@ class Staff(models.Model):
   teaching_subject_2 = models.ForeignKey(Subject, on_delete=models.SET_NULL, related_name='teachers_2', null=True, blank=True)                                                                                                                  
   profile_picture = models.ImageField(upload_to='staff_profile/', null=True,blank=True)
   STAFF_ROLE_CHOICES = [
-    ('teaching', 'Teaching'),
-    ('non_teaching', 'Non-Teaching'),
+    ('Teaching', 'Teaching'),
+    ('Non-Teaching', 'Non-Teaching'),
 ]
-  staff_role = models.CharField(max_length=20, choices=STAFF_ROLE_CHOICES)
+  staff_role = models.CharField(max_length=20, choices=STAFF_ROLE_CHOICES, blank=True, null=True)
   
   EMPLOYMENT_TYPE_CHOICES = [
-    ('regular', 'Regular'),
-    ('ssa', 'SSA'),
-    ('guest', 'Guest'),
-    ('hkrnl', 'HKRNL'),
-    ('nsqf', 'NSQF'),
-    ('mdmworker', 'MDM Worker'),
-    ('other', 'Other'),
+    ('Regular', 'Regular'),
+    ('SSA', 'SSA'),
+    ('Guest', 'Guest'),
+    ('HKRNL', 'HKRNL'),
+    ('NSQF', 'NSQF'),
+    ('MDMWorker', 'MDM Worker'),
+    ('Other', 'Other'),
 ]
-  employment_type = models.CharField(max_length=20, choices=EMPLOYMENT_TYPE_CHOICES)
+  employment_type = models.CharField(max_length=20, choices=EMPLOYMENT_TYPE_CHOICES, blank=True, null=True)
   bio = models.TextField(blank=True)
 
   def __str__(self):
-    return self.name
+        if self.name is not None:
+            return self.name
+        else:
+            return "Unnamed Staff"
   
   class Meta:
     verbose_name_plural = 'Staff'

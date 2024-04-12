@@ -1,7 +1,6 @@
 {%extends 'base.html'%}
 
-{% block title %} <title>Hello world</title>
-{% endblock title %}
+{% block title %} {% endblock title %}
 
 
 {% block content %}
@@ -25,3 +24,50 @@
 </ul>
 {% endif %}
 {% endblock content%}
+
+{% block stats %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Student Statistics</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">SC Boys: <span class="badge badge-primary">{{ sc_boys_count }}</span></li>
+                        <li class="list-group-item">SC Girls: <span class="badge badge-primary">{{ sc_girls_count }}</span></li>
+                        <li class="list-group-item">Total SC Students: <span class="badge badge-primary">{{ total_sc_students_count }}</span></li>
+                        <li class="list-group-item">BCA Boys: <span class="badge badge-primary">{{ bca_boys_count }}</span></li>
+                        <li class="list-group-item">BCA Girls: <span class="badge badge-primary">{{ bca_girls_count }}</span></li>
+                        <li class="list-group-item">Total BCA Students: <span class="badge badge-primary">{{ total_bca_students_count }}</span></li>
+                        <li class="list-group-item">BCB Boys: <span class="badge badge-primary">{{ bcb_boys_count }}</span></li>
+                        <li class="list-group-item">BCB Girls: <span class="badge badge-primary">{{ bcb_girls_count }}</span></li>
+                        <li class="list-group-item">Total BCB Students: <span class="badge badge-primary">{{ total_bcb_students_count }}</span></li>
+                        <li class="list-group-item">General Boys: <span class="badge badge-primary">{{ gen_boys_count }}</span></li>
+                        <li class="list-group-item">General Girls: <span class="badge badge-primary">{{ gen_girls_count }}</span></li>
+                        <li class="list-group-item">Total General Students: <span class="badge badge-primary">{{ total_gen_students_count }}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Teacher Statistics</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">SC Male Teachers: <span class="badge badge-success">{{ sc_male_teachers_count }}</span></li>
+                        <li class="list-group-item">SC Female Teachers: <span class="badge badge-success">{{ sc_female_teachers_count }}</span></li>
+                        <li class="list-group-item">Total SC Teachers: <span class="badge badge-success">{{ total_sc_teachers_count }}</span></li>
+                        <li class="list-group-item">BCA Male Teachers: <span class="badge badge-success">{{ bca_male_teachers_count }}</span></li>
+                        <li class="list-group-item">BCA Female Teachers: <span class="badge badge-success">{{ bca_female_teachers_count }}</span></li>
+                        <li class="list-group-item">Total BCA Teachers: <span class="badge badge-success">{{ total_bca_teachers_count }}</span></li>
+                        <li class="list-group-item">BCB Male Teachers: <span class="badge badge-success">{{ bcb_male_teachers_count }}</span></li>
+                        <li class="list-group-item">BCB Female Teachers: <span class="badge badge-success">{{ bcb_female_teachers_count }}</span></li>
+                        <li class="list-group-item">Total BCB Teachers: <span class="badge badge-success">{{ total_bcb_teachers_count }}</span></li>
+                        <li class="list-group-item">General Male Teachers: <span class="badge badge-success">{{ gen_male_teachers_count }}</span></li>
+                        <li class="list-group-item">General Female Teachers: <span class="badge badge-success">{{ gen_female_teachers_count }}</span></li>
+                        <li class="list-group-item">Total General Teachers: <span class="badge badge-success">{{ total_gen_teachers_count }}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
