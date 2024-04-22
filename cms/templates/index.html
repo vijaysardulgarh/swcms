@@ -6,74 +6,12 @@
 {% block content %}
 
 
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th rowspan="2">Class</th>
-                <th rowspan="2">Section</th>
-                <th colspan="2">SC</th>
-                <th colspan="2">BCA</th>
-                <th colspan="2">BCB</th>
-                <th colspan="2">GEN</th>
-                <th colspan="2">TOTAL</th>
-                <th colspan="2">CWSN</th>
-                <th colspan="2">BPL</th>
-            </tr>
-            <tr>
-                <th>Boys</th>
-                <th>Girls</th>
-                <th>Boys</th>
-                <th>Girls</th>
-                <th>Boys</th>
-                <th>Girls</th>
-                <th>Boys</th>
-                <th>Girls</th>
-                <th>Boys</th>
-                <th>Girls</th>
-                <th>Boys</th>
-                <th>Girls</th>
-                <th>Boys</th>
-                <th>Girls</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Dummy data row -->
-            <tr>
-                <td>10</td>
-                <td>A</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-                <td>11</td>
-                <td>12</td>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td>17</td>
-                <td>18</td>
-            </tr>
-            <!-- Data rows will be filled dynamically -->
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-
 
     {% if staff_members %}
 
         <ul class="w3-ul w3-card-4">
             <h2>Our Staff</h2>
-            {% for staff_members in staff_members %}
+            {% for staff_member in staff_members %}
                 <li class="w3-bar">
                     <span onclick="this.parentElement.style.display='none'"
                     class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>

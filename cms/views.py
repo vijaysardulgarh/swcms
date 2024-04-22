@@ -168,7 +168,7 @@ def about (request):
     return render(request,"about.html",{})
 
 def staff (request):
-    
-    return render(request,"staff.html",{})
+    staff_members=Staff.objects.all()
+    return render(request,"staff_members.html",{'staff_members':staff_members})
     
     
