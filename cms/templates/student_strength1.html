@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Strength</title>
+  <style>
+    /* Add CSS styling for table layout (optional) */
+  </style>
+</head>
+<body>
+  <h1>Student Strength Report</h1>
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="2">Class</th>
+        <th rowspan="2">Section</th>
+        <th colspan="2">SC</th>
+        <th colspan="2">BCA</th>
+        <th colspan="2">BCB</th>
+        <th colspan="2">GEN</th>
+        <th colspan="2">TOTAL</th>
+        <th colspan="2">CWSN</th>
+        <th colspan="2">BPL</th>
+      </tr>
+      <tr>
+        <th>Boys</th>
+        <th>Girls</th>
+        <th>Boys</th>
+        <th>Girls</th>
+        <th>Boys</th>
+        <th>Girls</th>
+        <th>Boys</th>
+        <th>Girls</th>
+        <th>Boys</th>
+        <th>Girls</th>
+        <th>Boys</th>
+        <th>Girls</th>
+        <th>Boys</th>
+        <th>Girls</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for class_section, category_data in table_data.items %}
+        <tr>
+          <td>{{ class_section.0 }}</td>
+          <td>{{ class_section.1 }}</td>
+          {% for key, count in category_data.items %}
+            {% if key.endswith('Total') %}  <td><b>{{ count }}</b></td>
+            {% else %}
+              <td>{{ count }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

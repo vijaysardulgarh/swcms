@@ -4,7 +4,53 @@ from .models import Staff,Student
 # Create your views here.
 import itertools
 
+from django.db.models import Count, Q,Case, When
 
+def student_strength(request):
+
+    class_order = {
+        'Sixth': 1,
+        'Seventh': 2,
+        'Eighth': 3,
+        'Nineth': 4,
+        'Tenth': 5,
+        'Eleventh': 6,    
+        'Twelfth': 7,
+       
+    }
+
+    student_strength = Student.objects.values('studentclass', 'section',).annotate(
+        
+        scmale=Count('srn', filter=Q(gender='Male',category__in=['SC', 'Scheduled Caste'])),  
+        scfemale=Count('srn', filter=Q(gender='Female',category__in=['SC', 'Scheduled Caste'])), 
+        bcamale=Count('srn', filter=Q(gender='Male',category='BC-A')),  
+        bcafemale=Count('srn', filter=Q(gender='Female',category='BC-A')),
+        bcbmale=Count('srn', filter=Q(gender='Male',category='BC-B')),  
+        bcbfemale=Count('srn', filter=Q(gender='Female',category='BC-B')),
+        genmale=Count('srn', filter=Q(gender='Male',category='GEN')),  
+        genfemale=Count('srn', filter=Q(gender='Female',category='GEN')),
+        totalmale=Count('srn', filter=Q(gender='Male')),  
+        totalfemale=Count('srn', filter=Q(gender='Female')),
+        total=Count('srn'),
+        #total_bpl=Count('srn', filter=Q(is_bpl=True)),
+        malecwsn=Count('srn', filter=Q(gender='Male') & ~Q(disability='') or ~Q(disability__isnull=True)),
+        femalecwsn=Count('srn', filter=Q(gender='Female') & ~Q(disability='') or ~Q(disability__isnull=True)),
+        cwsn=Count('srn', filter=~Q(disability='') or  ~Q(disability__isnull=True)),
+
+        order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
+    ).order_by('order')
+
+    context = {
+        #'sixth_sc_male':sixth_sc_male,
+        #'sixth_sc_female_strength':sixth_sc_female_strength,
+        #'seventh_sc_male_strength':seventh_sc_male_strength,
+        #'seventh_sc_female_strength':seventh_sc_female_strength,
+        #'eighth_sc_male_strength':eighth_sc_male_strength,
+        #'eighth_sc_female_strength':eighth_sc_female_strength,
+        #'student': student,
+        'student_strength': student_strength
+    }
+    return render(request, 'student_strength.html', context)
 
 
 def index (request):
@@ -75,7 +121,7 @@ def index (request):
 
     return render(request, 'index.html', context)
 
-def student_strength(request):
+def student_strength1(request):
     # Fetch all distinct class names
     classes = Student.objects.values_list('studentclass', flat=True).distinct()
 
@@ -94,8 +140,8 @@ def student_strength(request):
             # Calculate counts for each category and gender
             statistics = {
                 'SC': {'Male': 0, 'Female': 0},
-                'BC-A': {'Male': 0, 'Female': 0},
-                'BC-B': {'Male': 0, 'Female': 0},
+                'BC_A': {'Male': 0, 'Female': 0},
+                'BC_B': {'Male': 0, 'Female': 0},
                 'GEN': {'Male': 0, 'Female': 0},
                 'Total': {'Male': 0, 'Female': 0},
                 'CWSN': {'Male': 0, 'Female': 0},
@@ -114,13 +160,15 @@ def student_strength(request):
         'class_section_statistics': class_section_statistics
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'student_strength.html', context)
 
 
 def about (request):
     
     return render(request,"about.html",{})
 
-
+def staff (request):
+    
+    return render(request,"staff.html",{})
     
     

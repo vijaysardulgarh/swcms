@@ -8,66 +8,66 @@
   </head>
   <body>
     
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th rowspan="2">Class</th>
-                <th rowspan="2">Section</th>
-                <th colspan="2">SC</th>
-                <th colspan="2">BC-A</th>
-                <th colspan="2">BC-B</th>
-                <th colspan="2">GEN</th>
-                <th colspan="2">Total</th>
-                <th colspan="2">CWSN</th>
-                <th colspan="2">BPL</th>
-            </tr>
-            <tr>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Male</th>
-                <th>Female</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for class_section, counts in statistics.items %}
-            <tr>
-                <td>{{ class_section.0 }}</td>
-                <td>{{ class_section.1 }}</td>
-                <td>{{ counts.SC.Male }}</td>
-                <td>{{ counts.SC.Female }}</td>
-                <td>{{ counts.BC-A.Male }}</td>
-                <td>{{ counts.BC-A.Female }}</td>
-                <td>{{ counts.BC-B.Male }}</td>
-                <td>{{ counts.BC-B.Female }}</td>
-                <td>{{ counts.GEN.Male }}</td>
-                <td>{{ counts.GEN.Female }}</td>
-                <td>{{ counts.Total.Male }}</td>
-                <td>{{ counts.Total.Female }}</td>
-                <td>{{ counts.CWSN.Male }}</td>
-                <td>{{ counts.CWSN.Female }}</td>
-                <td>{{ counts.BPL.Male }}</td>
-                <td>{{ counts.BPL.Female }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+
+<div class="table table-striped">
+  <table>
+      <thead>
+          <tr>
+              <th rowspan="2">Class</th>
+              <th rowspan="2">Section</th>
+              <th colspan="2">SC</th>
+              <th colspan="2">BC-A</th>
+              <th colspan="2">BC-B</th>
+              <th colspan="2">GEN</th>
+              <th colspan="2">Total</th>
+              <th colspan="1">Grand</th>
+              <th colspan="2">CWSN</th>
+              <th colspan="2">BPL</th>
+          </tr>
+          <tr>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Total</th>
+              <th>Male</th>
+              <th>Female</th>
+              <th>Male</th>
+              <th>Female</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for data in student_strength %}
+          <tr>
+              <td>{{ data.studentclass }}</td>
+              <td>{{ data.section }}</td>
+              <td>{{ data.scmale }}</td>
+              <td>{{ data.scfemale }}</td>
+              <td>{{ data.bcamale}}</td>
+              <td>{{ data.bcafemale }}</td>
+              <td>{{ data.bcbmale }}</td>
+              <td>{{ data.bcbfemale }}</td>
+              <td>{{ data.genmale }}</td>
+              <td>{{ data.genfemale }}</td>
+              <td>{{ data.totalmale }}</td>
+              <td>{{ data.totalfemale }}</td>
+              <td>{{ data.total }}</td>
+              <td>{{ data.cwsn_male }}</td>
+              <td>{{ data.cwsn_female }}</td>
+              <td>{{ data.bpl_male }}</td>
+              <td>{{ data.bpl_female }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
 </div>
-
-    
-    
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
