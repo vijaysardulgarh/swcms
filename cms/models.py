@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-
+import json
 #from django.contrib.auth.models import AbstractUser
 
 
@@ -515,10 +515,40 @@ class Student(models.Model):
     category = models.CharField(max_length=100, blank=True, null=True)
     disability = models.CharField(max_length=255,blank=True, null=True)
     disorder = models.CharField(max_length=100, blank=True, null=True)
-
+    subjects_opted = models.CharField(max_length=255, blank=True, null=True)
+    subjects = models.TextField(blank=True, null=True) 
     def __str__(self):
         return str(self.full_name_aadhar) if self.full_name_aadhar else 'Student {}'.format(self.pk)
 
+    def save(self, *args, **kwargs):
+        if self.subjects_opted:
+            # Split the subjects_opted string into individual subjects
+            subject_list = self.subjects_opted.split(',')
+            
+            # Initialize lists to store optional and compulsory subjects
+            optional_subjects = []
+            #compulsory_subjects = []
+            
+            # Iterate through each subject to categorize as optional or compulsory
+            for subject in subject_list:
+                subject_type, subject_name = subject.split(':')
+                if subject_type.strip().startswith('Optional'):
+                    optional_subjects.append(subject_name.strip())  # Append to optional subjects list
+                #elif subject_type.strip().lower() == 'compulsory':
+                   # compulsory_subjects.append(subject_name.strip())  # Append to compulsory subjects list
+            
+            # Construct a dictionary to store optional and compulsory subjects
+            #subjects_dict = {
+            #    'optional': optional_subjects,
+            #    #'compulsory': compulsory_subjects
+            #}
+            
+            # Store the dictionary in JSON format in the subjects field
+                    
+            self.subjects = ', '.join(optional_subjects)
+            #self.subjects = json.dumps(optional_subjects)
+        
+        super().save(*args, **kwargs)
 
 class Topper(models.Model):
     AWARD_TYPE = (
