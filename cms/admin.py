@@ -115,7 +115,7 @@ class StudentResource(resources.ModelResource):
     school_code = fields.Field(attribute='school_code',column_name='SchoolCode')
     school_name = fields.Field(attribute='school_name',column_name='SchoolName')
   
-    
+    subjects_opted = fields.Field(attribute='subjects_opted',column_name='Subjects opted by student')
     domicile_of_haryana = fields.Field(attribute='domicile_of_haryana',column_name='Domicile Of Haryana?')
     father_aadhaar_number = fields.Field(attribute='father_aadhaar_number',column_name="Father's Aadhaar Number")
     mother_aadhaar_number = fields.Field(attribute='mother_aadhaar_number',column_name="Mother's Aadhaar Number")
@@ -135,9 +135,9 @@ class StudentResource(resources.ModelResource):
     class Meta:
         model = Student
         #exclude = ('id',)
-        fields = ('srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number','admission_date','title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town',) 
+        fields = ('srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number','admission_date','title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town','subjects_opted') 
         import_id_fields = ['srn']
-        export_order = ('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile')
+        export_order = ('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile','subjects_opted')
         #widgets = {
         #    'admission_date': {'format': '%d/%m/%Y'},  # Format for date fields
         #    'date_of_birth': {'format': '%d/%m/%Y'},  # Format for date fields
@@ -168,7 +168,7 @@ class StudentResource(resources.ModelResource):
 class StudentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     
     resource_class=StudentResource
-    list_display=('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile')
+    list_display=('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile','subjects_opted')
 
     
     
