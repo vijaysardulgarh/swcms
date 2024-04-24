@@ -135,7 +135,7 @@ class StudentResource(resources.ModelResource):
         #exclude = ('id',)
         fields = ('srn', 'school_code', 'school_name', 'admission_date', 'class', 'stream', 'section', 'roll_number', 'admission_number','admission_date','title', 'excel_full_name_aadhar', 'name_in_local_language', 'date_of_birth', 'gender', 'aadhaar_number', 'eid_number', 'domicile_of_haryana', 'nationality', 'excel_birth_country', 'birth_state', 'birth_district', 'birth_sub_district', 'birth_city_village_town','subjects_opted','subjects') 
         import_id_fields = ['srn']
-        export_order = ('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile','subjects_opted','subjects')
+        export_order = ('srn','studentclass','section','roll_number','full_name_aadhar','father_full_name_aadhar','mother_full_name_aadhar','date_of_birth','gender','aadhaar_number','category','admission_number','father_mobile','subjects')
         #widgets = {
         #    'admission_date': {'format': '%d/%m/%Y'},  # Format for date fields
         #    'date_of_birth': {'format': '%d/%m/%Y'},  # Format for date fields
@@ -144,7 +144,20 @@ class StudentResource(resources.ModelResource):
         #    # Widgets for boolean fields
        
         #}       
-    
+        def before_import(self, dataset, using_transactions, dry_run, **kwargs):
+        # Collect all SRNs from the Excel file
+            excel_srn_list = [row['SRN'] for row in dataset.dict]
+
+            # Get all existing SRNs from the database
+            existing_srn_set = set(Student.objects.values_list('srn', flat=True))
+
+            # Find SRNs that need to be deleted
+            srns_to_delete = existing_srn_set - set(excel_srn_list)
+
+            # Delete records from the database whose SRNs are not present in the Excel file
+            if srns_to_delete:
+                Student.objects.filter(srn__in=srns_to_delete).delete()
+            
     def before_import_row(self, row, **kwargs):
         try:
             if 'Date of Birth' in row and row['Date of Birth']:

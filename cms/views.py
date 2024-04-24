@@ -8,51 +8,60 @@ from django.db.models import Count, Q,Case, When
 
 def student_strength(request):
 
-    class_order = {
-        'Sixth': 1,
-        'Seventh': 2,
-        'Eighth': 3,
-        'Nineth': 4,
-        'Tenth': 5,
-        'Eleventh': 6,    
-        'Twelfth': 7,
-       
-    }
-
-    student_strength = Student.objects.values('studentclass', 'section',).annotate(
+    if request.method == 'POST':
+            # Get the school name from the form
+            school_name = request.POST.get('school_name')
         
-        scmale=Count('srn', filter=Q(gender='Male',category__in=['SC', 'Scheduled Caste'])),  
-        scfemale=Count('srn', filter=Q(gender='Female',category__in=['SC', 'Scheduled Caste'])), 
-        bcamale=Count('srn', filter=Q(gender='Male',category='BC-A')),  
-        bcafemale=Count('srn', filter=Q(gender='Female',category='BC-A')),
-        bcbmale=Count('srn', filter=Q(gender='Male',category='BC-B')),  
-        bcbfemale=Count('srn', filter=Q(gender='Female',category='BC-B')),
-        genmale=Count('srn', filter=Q(gender='Male',category='GEN')),  
-        genfemale=Count('srn', filter=Q(gender='Female',category='GEN')),
-        totalmale=Count('srn', filter=Q(gender='Male')),  
-        totalfemale=Count('srn', filter=Q(gender='Female')),
-        total=Count('srn'),
-        #total_bpl=Count('srn', filter=Q(is_bpl=True)),
-        malecwsn=Count('srn', filter=Q(gender='Male') & ~Q(disability='') or ~Q(disability__isnull=True)),
-        femalecwsn=Count('srn', filter=Q(gender='Female') & ~Q(disability='') or ~Q(disability__isnull=True)),
-        cwsn=Count('srn', filter=~Q(disability='') or  ~Q(disability__isnull=True)),
 
-        order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
-    ).order_by('order')
+            class_order = {
+                'Sixth': 1,
+                'Seventh': 2,
+                'Eighth': 3,
+                'Nineth': 4,
+                'Tenth': 5,
+                'Eleventh': 6,    
+                'Twelfth': 7,
+            
+            }
 
-    context = {
-        #'sixth_sc_male':sixth_sc_male,
-        #'sixth_sc_female_strength':sixth_sc_female_strength,
-        #'seventh_sc_male_strength':seventh_sc_male_strength,
-        #'seventh_sc_female_strength':seventh_sc_female_strength,
-        #'eighth_sc_male_strength':eighth_sc_male_strength,
-        #'eighth_sc_female_strength':eighth_sc_female_strength,
-        #'student': student,
-        'student_strength': student_strength
-    }
-    return render(request, 'student_strength.html', context)
+            student_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section',).annotate(
+        
+            scmale=Count('srn', filter=Q(gender='Male',category__in=['SC', 'Scheduled Caste'])),  
+            scfemale=Count('srn', filter=Q(gender='Female',category__in=['SC', 'Scheduled Caste'])), 
+            bcamale=Count('srn', filter=Q(gender='Male',category='BC-A')),  
+            bcafemale=Count('srn', filter=Q(gender='Female',category='BC-A')),
+            bcbmale=Count('srn', filter=Q(gender='Male',category='BC-B')),  
+            bcbfemale=Count('srn', filter=Q(gender='Female',category='BC-B')),
+            genmale=Count('srn', filter=Q(gender='Male',category='GEN')),  
+            genfemale=Count('srn', filter=Q(gender='Female',category='GEN')),
+            totalmale=Count('srn', filter=Q(gender='Male')),  
+            totalfemale=Count('srn', filter=Q(gender='Female')),
+            total=Count('srn'),
+            #total_bpl=Count('srn', filter=Q(is_bpl=True)),
+            malecwsn=Count('srn', filter=Q(gender='Male') & ~Q(disability='') or ~Q(disability__isnull=True)),
+            femalecwsn=Count('srn', filter=Q(gender='Female') & ~Q(disability='') or ~Q(disability__isnull=True)),
+            cwsn=Count('srn', filter=~Q(disability='') or  ~Q(disability__isnull=True)),
+            order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
+        ).order_by('order')
+            
+            context = {
+            #'sixth_sc_male':sixth_sc_male,
+            #'sixth_sc_female_strength':sixth_sc_female_strength,
+            #'seventh_sc_male_strength':seventh_sc_male_strength,
+            #'seventh_sc_female_strength':seventh_sc_female_strength,
+            #'eighth_sc_male_strength':eighth_sc_male_strength,
+            #'eighth_sc_female_strength':eighth_sc_female_strength,
+            #'student': student,
+            'student_strength': student_strength,
+            'school_name':school_name
+        }
+            return render(request, 'student_strength.html', context)
 
-
+    else:
+        school_names = Student.objects.values_list('school_name', flat=True).distinct()
+        context = {'school_names': school_names}
+        return render(request, 'school_student_strength.html',context)
+    
 def index (request):
      
     staff_members=Staff.objects.all

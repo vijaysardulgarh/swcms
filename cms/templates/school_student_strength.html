@@ -1,0 +1,22 @@
+<!-- input_school_name.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input School Name</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="school_name">Select School Name:</label>
+        <select id="school_name" name="school_name" required>
+            <option value="">Select a School</option>
+            {% for name in school_names %}
+            <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
