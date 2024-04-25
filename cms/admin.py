@@ -56,7 +56,7 @@ class StaffResource(resources.ModelResource):
     qualification= fields.Field(attribute='qualification',column_name='Qualification')
     subject = fields.Field(attribute='subject',column_name='Subject')
     email = fields.Field(attribute='email',column_name='Email ID')
-    mobile_number = fields.Field(attribute='phone_number',column_name='Mobile Number')
+    mobile_number = fields.Field(attribute='mobile_number',column_name='Mobile Number')
     teaching_subject_1 = fields.Field(attribute='teaching_subject_1',column_name='Teaching Subject 1')
     teaching_subject_2 = fields.Field(attribute='teaching_subject_1',column_name='Teaching Subject 2')
     staff_role = fields.Field(attribute='staff_role',column_name='Staff Role')
