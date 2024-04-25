@@ -41,6 +41,7 @@ admin.site.site_title="SIMS"
 admin.site.index_title="School Information Management System"
 class StaffResource(resources.ModelResource):
     employee_id = fields.Field(attribute='employee_id',column_name='Employee ID')
+    school = fields.Field(attribute='school',column_name='School')
     name = fields.Field(attribute='name',column_name='Employee Name [ID]')
     father_name = fields.Field(attribute='father_name',column_name="Father's Name")
     mother_name = fields.Field(attribute='mother_name',column_name="Mother's Name")
