@@ -238,7 +238,10 @@ class Section(models.Model):
 
 
 
+from django.db import models
+
 class Subject(models.Model):
+    NONE = 'None'
     HINDI = 'Hindi'
     ENGLISH = 'English'
     SOCIAL_STUDIES = 'Social Studies'
@@ -259,8 +262,12 @@ class Subject(models.Model):
     MUSIC = 'Music'
     AUTOMOBILE = 'Automobile'
     BEAUTY_WELLNESS = 'Beauty & Wellness'
+    BIOLOGY = 'Biology'
+    SANSKRIT = 'Sanskrit'
+    FINEARTS = 'Fine Arts'
 
     SUBJECT_CHOICES = [
+        (NONE, 'None'),
         (HINDI, 'Hindi'),
         (ENGLISH, 'English'),
         (SOCIAL_STUDIES, 'Social Studies'),
@@ -281,12 +288,16 @@ class Subject(models.Model):
         (MUSIC, 'Music'),
         (AUTOMOBILE, 'Automobile'),
         (BEAUTY_WELLNESS, 'Beauty & Wellness'),
+        (BIOLOGY, 'Biology'),
+        (SANSKRIT, 'Sanskrit'),
+        (FINEARTS, 'Fine Arts'),
     ]
 
     name = models.CharField(max_length=100, choices=SUBJECT_CHOICES, unique=True)
 
     def __str__(self):
         return self.name
+
 
 class ClassSubject(models.Model):
     class_info = models.ForeignKey(Class, on_delete=models.CASCADE)
@@ -326,6 +337,7 @@ class Staff(models.Model):
   joining_date = models.DateField(null=True, blank=True)
   current_joining_date = models.DateField(null=True, blank=True)
   retirement_date = models.DateField(null=True, blank=True)
+  qualification = models.CharField(max_length=255, null=True, blank=True)
   subject = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='Staff',null=True, blank=True)
   email = models.EmailField(unique=True, blank=True,null=True)
   mobile_number = models.CharField(max_length=15, null=True,blank=True)     

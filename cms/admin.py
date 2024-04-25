@@ -53,6 +53,7 @@ class StaffResource(resources.ModelResource):
     joining_date = fields.Field(attribute='joining_date',column_name='Date of Joining School/Office')
     current__joining_date = fields.Field(attribute='current_joining_date',column_name='Date of Joining School/Office')
     retirement_date = fields.Field(attribute='retirement_date',column_name='Retirement Date')
+    qualification= fields.Field(attribute='qualification',column_name='Qualification')
     subject = fields.Field(attribute='subject',column_name='Subject')
     email = fields.Field(attribute='email',column_name='Email ID')
     mobile_number = fields.Field(attribute='phone_number',column_name='Mobile Number')
@@ -64,7 +65,7 @@ class StaffResource(resources.ModelResource):
 
     class Meta:
         model = Staff
-        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","teaching_subject_1","teaching_subject_2","email","mobile_number","subject","staff_role","employment_type","designation")
+        fields=('id',"employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","qualification","teaching_subject_1","teaching_subject_2","email","mobile_number","subject","staff_role","employment_type","designation")
 
     def before_import_row(self, row, **kwargs):
         try:
@@ -85,7 +86,7 @@ class StaffResource(resources.ModelResource):
             return None  # Or provide a default value
         
 class StaffAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","email","mobile_number","teaching_subject_1","staff_role","employment_type","designation")
+    list_display =("employee_id","name","father_name","mother_name","spouse_name","gender","aadhar_number","category","date_of_birth","joining_date","retirement_date","qualification","email","mobile_number","teaching_subject_1","staff_role","employment_type","designation")
     resource_class=StaffResource
 class StudentResource(resources.ModelResource):
     
