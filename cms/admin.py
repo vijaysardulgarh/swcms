@@ -131,6 +131,7 @@ class StudentResource(resources.ModelResource):
     postal_code = fields.Field(attribute='postal_code',column_name='Postalcode')
     guardian_mobile = fields.Field(attribute='mother_mobile', column_name="Guardian's Mobile No")
     caste = fields.Field(attribute='caste_name', column_name='Caste Name')
+    bpl_certificate_issuing_authority=fields.Field(attribute='bpl_certificate_issuing_authority',column_name='BPL Certificate Issuing Authority')
     
     class Meta:
         model = Student

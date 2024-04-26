@@ -529,6 +529,8 @@ class Student(models.Model):
     disorder = models.CharField(max_length=100, blank=True, null=True)
     subjects_opted = models.CharField(max_length=255, blank=True, null=True)
     subjects = models.TextField(blank=True, null=True) 
+    bpl_certificate_issuing_authority= models.CharField(max_length=255,blank=True, null=True)
+
     def __str__(self):
         return str(self.full_name_aadhar) if self.full_name_aadhar else 'Student {}'.format(self.pk)
 
