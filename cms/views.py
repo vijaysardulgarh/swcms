@@ -42,6 +42,10 @@ def student_strength(request):
             femalecwsn = Count('srn', filter=Q(gender='Female') & ~Q(disability=None) & ~Q(disability='')),
             cwsn = Count('srn', filter=~Q(disability='') | ~Q(disability=None)),
 
+            malebpl = Count('srn', filter=Q(gender='Male') & ~Q(bpl_certificate_issuing_authority=None) & ~Q(bpl_certificate_issuing_authority='')),
+            femalebpl = Count('srn', filter=Q(gender='Female') & ~Q(bpl_certificate_issuing_authority=None) & ~Q(bpl_certificate_issuing_authority='')),
+            bpl = Count('srn', filter=~Q(bpl_certificate_issuing_authority='') | ~Q(bpl_certificate_issuing_authority=None)),
+
             order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
         ).order_by('order')
             
