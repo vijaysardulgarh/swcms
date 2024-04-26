@@ -38,9 +38,10 @@ def student_strength(request):
             totalfemale=Count('srn', filter=Q(gender='Female')),
             total=Count('srn'),
             #total_bpl=Count('srn', filter=Q(is_bpl=True)),
-            malecwsn=Count('srn', filter=Q(gender='Male') & ~Q(disability='') or ~Q(disability__isnull=True)),
-            femalecwsn=Count('srn', filter=Q(gender='Female') & ~Q(disability='') or ~Q(disability__isnull=True)),
-            cwsn=Count('srn', filter=~Q(disability='') or  ~Q(disability__isnull=True)),
+            malecwsn = Count('srn', filter=Q(gender='Male') & ~Q(disability=None) & ~Q(disability='')),
+            femalecwsn = Count('srn', filter=Q(gender='Female') & ~Q(disability=None) & ~Q(disability='')),
+            cwsn = Count('srn', filter=~Q(disability='') | ~Q(disability=None)),
+
             order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
         ).order_by('order')
             
