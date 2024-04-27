@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+import datetime
 import json
 #from django.contrib.auth.models import AbstractUser
 
@@ -406,37 +406,35 @@ class TimetableSlot(models.Model):
     ]
     day = models.CharField(max_length=20, choices=DAY_CHOICES)
 
-    period = models.IntegerField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    period = models.IntegerField(null=True, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.period}-{self.day} - {self.start_time} - {self.end_time}"
     
 class TimeSlot(models.Model):
     
-    SEASON_CHOICES = (
-        ('winter', 'winter'),
-        ('summer', 'Summer'),
-        ('other', 'Other'),
-        # Add more semesters as needed
-    )
-    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
-    DAY_CHOICES = [
+    day_choices = (
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),
         ('Wednesday', 'Wednesday'),
         ('Thursday', 'Thursday'),
         ('Friday', 'Friday'),
-    ]
-    day = models.CharField(max_length=20, choices=DAY_CHOICES)
-
-    period = models.IntegerField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+    )
+    
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+    day = models.CharField(max_length=10, choices=day_choices,null=True, blank=True)
 
     def __str__(self):
-        return f"{self.period}-{self.day} - {self.start_time} - {self.end_time}"
+        return f"{self.day} - {self.start_time} - {self.end_time}"
+    
+    class Meta:
+        verbose_name = "Time Slot"
+        verbose_name_plural = "Time Slots"
     
     
 class Timetable(models.Model):
