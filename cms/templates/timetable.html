@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable</title>
+</head>
+<body>
+    <h1>Timetable</h1>
+    <table border="1">
+        <tr>
+            <th>Class Name</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+        {% for entry in timetable %}
+        <tr>
+            <td>{{ entry.class_name }}</td>
+            <td>{{ entry.subject }}</td>
+            <td>{{ entry.teacher }}</td>
+            <td>{{ entry.day }}</td>
+            <td>{{ entry.start_time }}</td>
+            <td>{{ entry.end_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

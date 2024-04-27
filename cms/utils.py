@@ -14,6 +14,10 @@ def generate_timetable(classes, subjects, teachers, time_slots, total_duration):
     period_durations = [timedelta(minutes=45)] * 4 + [timedelta(minutes=40)] * 4
     shuffle(period_durations)
 
+    subjects = list(classes)
+    subjects = list(subjects)
+    teachers = list(teachers)
+    time_slots = list(time_slots)
     # Shuffle the classes, subjects, teachers, and time slots to randomize the allocation
     shuffle(classes)
     shuffle(subjects)

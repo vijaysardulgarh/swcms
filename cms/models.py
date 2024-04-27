@@ -413,7 +413,30 @@ class TimetableSlot(models.Model):
     def __str__(self):
         return f"{self.period}-{self.day} - {self.start_time} - {self.end_time}"
     
+class TimeSlot(models.Model):
+    
+    SEASON_CHOICES = (
+        ('winter', 'winter'),
+        ('summer', 'Summer'),
+        ('other', 'Other'),
+        # Add more semesters as needed
+    )
+    season = models.CharField(max_length=10, choices=SEASON_CHOICES)
+    DAY_CHOICES = [
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+    ]
+    day = models.CharField(max_length=20, choices=DAY_CHOICES)
 
+    period = models.IntegerField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f"{self.period}-{self.day} - {self.start_time} - {self.end_time}"
     
     
 class Timetable(models.Model):

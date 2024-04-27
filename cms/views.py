@@ -1,10 +1,32 @@
 from django.shortcuts import render
 from . import views
-from .models import Staff,Student
+from .models import Staff,Student,Class,Subject,TimeSlot
 # Create your views here.
 import itertools
 
 from django.db.models import Count, Q,Case, When
+from cms.utils import generate_timetable
+
+def timetable_view(request):
+    # Fetch necessary data from the database
+    classes = Class.objects.all()
+    subjects = Subject.objects.all()
+    teachers = Staff.objects.all()
+    time_slots = TimeSlot.objects.all()
+    
+    # Calculate total duration for the timetable (assuming 5 days a week)
+    total_duration = 5 * 8  # 8 hours per day
+    
+    # Generate the timetable
+    timetable = generate_timetable(classes, subjects, teachers, time_slots, total_duration)
+    
+    # Pass the timetable data to the template
+    context = {'timetable': timetable}
+    
+    # Render the template
+    return render(request, 'timetable.html', context)
+
+
 
 def student_strength(request):
 
