@@ -432,10 +432,11 @@ class DailyTimeSlot(models.Model):
         ('Saturday', 'Saturday'),
         ('Sunday', 'Sunday'),
     )
-    
+    period = models.IntegerField(null=True, blank=True)
+    day = models.CharField(max_length=10, choices=day_choices,null=True, blank=True)
     start_time = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='start_time')
     end_time = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='end_time')
-    day = models.CharField(max_length=10, choices=day_choices,null=True, blank=True)
+    
 
     def __str__(self):
         return f"{self.day} - {self.start_time} - {self.end_time}"
@@ -444,7 +445,16 @@ class DailyTimeSlot(models.Model):
         verbose_name = "Daily Time Slot"
         verbose_name_plural = "Daily Time Slots"
     
-    
+class TeacherSubjectAllocation(models.Model):
+    class_level = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    periods_per_week = models.PositiveIntegerField()
+    teacher=models.ForeignKey(Staff, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.subject.name} - {self.class_level.name}"
+
+
 class Timetable(models.Model):
 
     CLASS_TYPE_CHOICES = (
