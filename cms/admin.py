@@ -173,7 +173,7 @@ class StudentResource(resources.ModelResource):
 
     def reformat_date(self, date_str):
         try:
-            original_format = "%m/%d/%Y %H:%M:%S"  # Adjust format for date with time
+            original_format = "%b %d, %Y"  # Adjust format for date with time
             date_obj = datetime.datetime.strptime(date_str, original_format)
             return date_obj.strftime("%Y-%m-%d")
         except ValueError as e:
