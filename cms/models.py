@@ -413,7 +413,15 @@ class TimetableSlot(models.Model):
     def __str__(self):
         return f"{self.period}-{self.day} - {self.start_time} - {self.end_time}"
     
+
+
 class TimeSlot(models.Model):
+    time = models.TimeField()
+
+    def __str__(self):
+        return str(self.time)
+    
+class DailyTimeSlot(models.Model):
     
     day_choices = (
         ('Monday', 'Monday'),
@@ -425,16 +433,16 @@ class TimeSlot(models.Model):
         ('Sunday', 'Sunday'),
     )
     
-    start_time = models.TimeField(null=True, blank=True)
-    end_time = models.TimeField(null=True, blank=True)
+    start_time = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='start_time')
+    end_time = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='end_time')
     day = models.CharField(max_length=10, choices=day_choices,null=True, blank=True)
 
     def __str__(self):
         return f"{self.day} - {self.start_time} - {self.end_time}"
     
     class Meta:
-        verbose_name = "Time Slot"
-        verbose_name_plural = "Time Slots"
+        verbose_name = "Daily Time Slot"
+        verbose_name_plural = "Daily Time Slots"
     
     
 class Timetable(models.Model):

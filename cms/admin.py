@@ -29,7 +29,7 @@ from .models import ClassIncharge
 from .models import Timetable
 from .models import Day
 from .models import TimetableSlot
-from .models import TimeSlot
+from .models import DailyTimeSlot,TimeSlot
 from .models import TimetableEntry
 from .models import Student
 from .models import Topper
@@ -203,20 +203,36 @@ class TimetableSlotAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display=('season','day','period','start_time','end_time')
     resource_class=TimetableSlotResource
 
+
 class TimeSlotResource(resources.ModelResource):
+    class Meta:
+        model = TimeSlot
+        fields=('id','time')
+
+class TimeSlotAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ['get_times']
+
+    def get_times(self, obj):
+        return str(obj.time)
+    get_times.short_description = 'Times'
+
+    resource_class = TimeSlotResource
+
+
+class DailyTimeSlotResource(resources.ModelResource):
     
     day = fields.Field(attribute='day',column_name='Day')
     start_time = fields.Field(attribute='start_time',column_name='Start Time')
     end_time = fields.Field(attribute='end_time',column_name='End Time')
 
     class Meta:
-        model = TimeSlot
+        model = DailyTimeSlot
         fields=('id','day','start_time','end_time')
         #use_id=False    
 
-class TimeSlotAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+class DailyTimeSlotAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display=('day','start_time','end_time')
-    resource_class=TimeSlotResource
+    resource_class=DailyTimeSlotResource
 
 class TimetableEntryResource(resources.ModelResource):
     section = fields.Field(attribute='section',column_name='Section')
@@ -283,6 +299,7 @@ admin.site.register(Classroom)
 admin.site.register(ClassIncharge)
 admin.site.register(Timetable,TimetableAdmin)
 admin.site.register(TimeSlot,TimeSlotAdmin)
+admin.site.register(DailyTimeSlot,DailyTimeSlotAdmin)
 admin.site.register(TimetableSlot,TimetableSlotAdmin)
 admin.site.register(TimetableEntry,TimetableEntryAdmin)
 admin.site.register(Student,StudentAdmin)
