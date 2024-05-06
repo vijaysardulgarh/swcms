@@ -311,7 +311,7 @@ class ClassSubject(models.Model):
 class Staff(models.Model):
   #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
   employee_id = models.CharField(max_length=20, unique=True,blank=True, null=True)
-  school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True, related_name='staff')
+  school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True,blank=True, related_name='staff')
   name = models.CharField(max_length=50)
   father_name = models.CharField(max_length=50, null=True,blank=True)
   mother_name = models.CharField(max_length=50,null=True, blank=True)
@@ -338,7 +338,7 @@ class Staff(models.Model):
   current_joining_date = models.DateField(null=True, blank=True)
   retirement_date = models.DateField(null=True, blank=True)
   qualification = models.CharField(max_length=255, null=True, blank=True)
-  subject = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='Staff',null=True, blank=True)
+  subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, related_name='Staff',null=True, blank=True)
   email = models.EmailField(unique=True, blank=True,null=True)
   mobile_number = models.CharField(max_length=15, null=True,blank=True)     
   teaching_subject_1 = models.ForeignKey(Subject, on_delete=models.SET_NULL, related_name='teachers_1', null=True, blank=True)
@@ -432,7 +432,7 @@ class DailyTimeSlot(models.Model):
         ('Saturday', 'Saturday'),
         ('Sunday', 'Sunday'),
     )
-    period = models.IntegerField(null=True, blank=True)
+    #period = models.IntegerField(null=True, blank=True)
     day = models.CharField(max_length=10, choices=day_choices,null=True, blank=True)
     start_time = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='start_time')
     end_time = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, related_name='end_time')
@@ -444,6 +444,19 @@ class DailyTimeSlot(models.Model):
     class Meta:
         verbose_name = "Daily Time Slot"
         verbose_name_plural = "Daily Time Slots"
+
+
+class SubjectTeacherAssignment(models.Model):
+    teacher = models.ForeignKey(Staff, on_delete=models.CASCADE,to_field='employee_id')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    class_name = models.CharField(max_length=20)
+    maximum_periods_per_subject = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.teacher.name} - {self.subject} - {self.class_name} ({self.maximum_periods_per_subject} periods)"
+
+
+      
     
 class TeacherSubjectAllocation(models.Model):
     class_level = models.ForeignKey(Class, on_delete=models.CASCADE)
