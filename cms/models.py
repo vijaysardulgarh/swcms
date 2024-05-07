@@ -446,26 +446,17 @@ class DailyTimeSlot(models.Model):
         verbose_name_plural = "Daily Time Slots"
 
 
-class SubjectTeacherAssignment(models.Model):
+class TeacherSubjectAssignment(models.Model):
+
+    class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Staff, on_delete=models.CASCADE,to_field='employee_id')
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    class_name = models.CharField(max_length=20)
-    maximum_periods_per_subject = models.PositiveIntegerField(default=0)
+    maximum_periods_per_teacher = models.PositiveIntegerField()
+    periods_per_week = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f"{self.teacher.name} - {self.subject} - {self.class_name} ({self.maximum_periods_per_subject} periods)"
+        return f"{self.teacher.name} - {self.subject} - {self.class_name} ({self.maximum_periods_per_teacher} periods)"
 
-
-      
-    
-class TeacherSubjectAllocation(models.Model):
-    class_level = models.ForeignKey(Class, on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    periods_per_week = models.PositiveIntegerField()
-    teacher=models.ForeignKey(Staff, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.subject.name} - {self.class_level.name}"
 
 
 class Timetable(models.Model):

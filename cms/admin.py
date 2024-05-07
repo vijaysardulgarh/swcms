@@ -29,7 +29,7 @@ from .models import ClassIncharge
 from .models import Timetable
 from .models import Day
 from .models import TimetableSlot
-from .models import DailyTimeSlot,TimeSlot,SubjectTeacherAssignment
+from .models import DailyTimeSlot,TimeSlot,TeacherSubjectAssignment
 from .models import TimetableEntry
 from .models import Student
 from .models import Topper
@@ -237,22 +237,27 @@ class DailyTimeSlotAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     resource_class=DailyTimeSlotResource
 
 
-class SubjectTeacherAssignmentResource(resources.ModelResource):
+class TeacherSubjectAssignmentResource(resources.ModelResource):
     
     teacher = fields.Field(attribute='teacher',column_name='Teacher')
     subject = fields.Field(attribute='subject',column_name='Subject')
     class_name = fields.Field(attribute='class_name',column_name='Class Name')
-    maximum_periods_per_subject = fields.Field(attribute='periods',column_name='Maximum Periods Per Subject')
-
+    maximum_periods_per_teacher = fields.Field(attribute='periods',column_name='Maximum Periods Per Teacher')
+    periods_per_week = fields.Field(attribute='periods_per_week',column_name='Maximum Periods Per Subject Per Week')
     class Meta:
-        model = SubjectTeacherAssignment
-        fields=('teacher','subject','class_name','maximum_periods_per_subject')
+        model = TeacherSubjectAssignment
+        fields=('id','class_name','subject','teacher','maximum_periods_per_teacher','periods_per_week')
         #use_id=False    
 
+    
 
-class SubjectTeacherAssignmentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    list_display=('teacher','subject','class_name','maximum_periods_per_subject')
-    resource_class=SubjectTeacherAssignmentResource
+class TeacherSubjectAssignmentAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    list_display=('class_name','subject','teacher','maximum_periods_per_teacher','periods_per_week')
+    resource_class=TeacherSubjectAssignmentResource
+    
+    def get_queryset(self, request):
+        # Return only teaching staff
+        return TeacherSubjectAssignment.objects.filter(teacher__staff_role='Teaching')
 
 class TimetableEntryResource(resources.ModelResource):
     section = fields.Field(attribute='section',column_name='Section')
@@ -325,6 +330,6 @@ admin.site.register(TimetableEntry,TimetableEntryAdmin)
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Topper)
 admin.site.register(Book)
-admin.site.register(SubjectTeacherAssignment,SubjectTeacherAssignmentAdmin)
+admin.site.register(TeacherSubjectAssignment,TeacherSubjectAssignmentAdmin)
 
 
