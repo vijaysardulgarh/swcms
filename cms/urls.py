@@ -6,6 +6,7 @@ urlpatterns = [
     path('about',views.about,name='about.html'),
     path('staff_members',views.staff,name='staff_members.html'),
     path('student_strength',views.student_strength,name='student_strength.html'),
+    path('subject_strength',views.student_strength,name='subject_strength.html'),
     path('timetable/', timetable_view, name='timetable'),
   
 ]

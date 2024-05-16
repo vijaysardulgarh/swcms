@@ -89,6 +89,65 @@ def student_strength(request):
         context = {'school_names': school_names}
         return render(request, 'school_student_strength.html',context)
     
+def subject_strength(request):
+
+    if request.method == 'POST':
+            # Get the school name from the form
+            school_name = request.POST.get('school_name')
+        
+
+            class_order = {
+                'Sixth': 1,
+                'Seventh': 2,
+                'Eighth': 3,
+                'Nineth': 4,
+                'Tenth': 5,
+                'Eleventh': 6,    
+                'Twelfth': 7,
+            
+            }
+
+            student_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section',).annotate(
+        
+            punjabi=Count('srn', filter=Q(subjects__in=['Punjabi'])),  
+            music=Count('srn', filter=Q(subjects__in=['Music'])),  
+            accountancy=Count('srn', filter=Q(subjects__in=['Accountancy'])),  
+            business_studies=Count('srn', filter=Q(subjects__in=['Business Studies'])),  
+            economics=Count('srn', filter=Q(subjects__in=['Economics'])),
+
+            sanskrit=Count('srn', filter=Q(subjects__in=['Sanskrit'])),  
+            fine_arts=Count('srn', filter=Q(subjects__in=['Fine Arts'])),  
+            political_science=Count('srn', filter=Q(subjects__in=['Political Science'])),  
+            mathematics=Count('srn', filter=Q(subjects__in=['Mathematics'])),  
+            psychology=Count('srn', filter=Q(subjects__in=['Psychology'])),
+            drawing=Count('srn', filter=Q(subjects__in=['Drawing'])),  
+            english=Count('srn', filter=Q(subjects__in=['English'])),  
+            hindi=Count('srn', filter=Q(subjects__in=['Hindi'])),  
+            social_science=Count('srn', filter=Q(subjects__in=['Social Science'])),  
+            science=Count('srn', filter=Q(subjects__in=['Science'])),
+            physics=Count('srn', filter=Q(subjects__in=['Physics'])),  
+            chemistry=Count('srn', filter=Q(subjects__in=['Chemistry'])),  
+            biology=Count('srn', filter=Q(subjects__in=['Biology'])),  
+            home_science=Count('srn', filter=Q(subjects__in=['Home Science'])),  
+            physical_education=Count('srn', filter=Q(subjects__in=['Physical Education'])),
+            automobile=Count('srn', filter=Q(subjects__in=['Automobile'])),  
+            beauty_wellness=Count('srn', filter=Q(subjects__in=['Beauty & Wellness'])),
+
+            order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
+        ).order_by('order')
+            
+            context = {
+
+            'student_strength': student_strength,
+            'school_name':school_name
+        }
+            return render(request, 'student_strength.html', context)
+
+    else:
+        school_names = Student.objects.values_list('school_name', flat=True).distinct()
+        context = {'school_names': school_names}
+        return render(request, 'school_student_strength.html',context)    
+    
 def index (request):
      
     staff_members=Staff.objects.all

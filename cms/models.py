@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 from django.utils import timezone
 import datetime
 import json
@@ -488,6 +489,20 @@ class Timetable(models.Model):
 
     def __str__(self):
         return f"{self.day}, {self.start_time} - {self.end_time}: {self.class_name} ({self.section})"
+
+
+class TimetableForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'instance' in kwargs:
+            subject = kwargs['instance'].subject
+            if subject:
+                self.fields['teachers'].queryset = subject.teachers.all()
+                # Adjust the queryset as needed based on your model structure
+
+    class Meta:
+        model = Timetable
+        fields = '__all__'
 
 
 class Day(models.Model):
