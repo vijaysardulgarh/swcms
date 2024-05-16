@@ -92,7 +92,7 @@ def student_strength(request):
 def subject_strength(request):
 
 
-            
+    subjects_opted =Student.objects.filter(school_name=school_name)       
     if subjects_opted:
         # Split the subjects_opted string into individual subjects
         subject_list = subjects_opted.split(',')
@@ -126,7 +126,7 @@ def subject_strength(request):
             
             }
 
-            student_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section',).annotate(
+            subject_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section',).annotate(
         
             punjabi=Count('srn', filter=Q(subjects__in=['Punjabi'])),  
             music=Count('srn', filter=Q(subjects__in=['Music'])),  
@@ -157,10 +157,10 @@ def subject_strength(request):
             
             context = {
 
-            'student_strength': student_strength,
+            'subject_strength': student_strength,
             'school_name':school_name
         }
-            return render(request, 'student_strength.html', context)
+            return render(request, 'subject_strength.html', context)
 
     else:
         school_names = Student.objects.values_list('school_name', flat=True).distinct()
