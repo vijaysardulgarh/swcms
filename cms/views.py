@@ -91,6 +91,25 @@ def student_strength(request):
     
 def subject_strength(request):
 
+
+            
+    if subjects_opted:
+        # Split the subjects_opted string into individual subjects
+        subject_list = subjects_opted.split(',')
+        
+        # Initialize lists to store optional and compulsory subjects
+        subjects = []
+        
+        # Iterate through each subject to categorize as optional or compulsory
+        for subject in subject_list:
+            subject_type, subject_name = subject.split(':')
+            subjects.append(subject_name.strip())  # Append to optional subjects list
+        
+   
+
+
+
+
     if request.method == 'POST':
             # Get the school name from the form
             school_name = request.POST.get('school_name')
