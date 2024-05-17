@@ -169,7 +169,7 @@ def subject_strength(request):
             
             context = {
 
-            'subject_strength': student_strength,
+            'subject_strength': subject_strength,
             'school_name':school_name
         }
             return render(request, 'subject_strength.html', context)
