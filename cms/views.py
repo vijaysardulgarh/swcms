@@ -114,6 +114,18 @@ def subject_strength(request):
             # Get the school name from the form
             school_name = request.POST.get('school_name')
         
+            students =Student.objects.filter(school_name=school_name)      
+
+            for student in students:
+                subjects_opted = student['subjects_opted']
+
+                if subjects_opted:
+                    subject_list = subjects_opted.split(',')
+                    subjects = []
+                    for subject in subject_list:
+                        subject_type, subject_name = subject.split(':')
+                        subjects.append(subject_name.strip())
+
 
             class_order = {
                 'Sixth': 1,
@@ -165,7 +177,7 @@ def subject_strength(request):
     else:
         school_names = Student.objects.values_list('school_name', flat=True).distinct()
         context = {'school_names': school_names}
-        return render(request, 'school_student_strength.html',context)    
+        return render(request, 'school_subject_strength.html',context)    
     
 def index (request):
      

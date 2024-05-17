@@ -17,59 +17,37 @@
 
 
 <div >
-  <h1>School Strength for {{ school_name }}</h1>
+  <h1>Subject Strength for {{ school_name }}</h1>
   <table class="table table-bordered table-hover table-striped">
+
       <thead class="table-dark">
           <tr align="center">
-              <th rowspan="2">Class</th>
-              <th rowspan="2">Section</th>
-              <th colspan="2">SC</th>
-              <th colspan="2">BC-A</th>
-              <th colspan="2">BC-B</th>
-              <th colspan="2">GEN</th>
-              <th colspan="2">CWSN</th>
-              <th colspan="2">BPL</th>
-              <th colspan="2">Total</th>
-              <th colspan="1">Grand</th>
-          </tr>
-          <tr align="center">
-              <th>Male</th>
-              <th>Female</th>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Total</th>
+              <th>Class</th>
+              <th>Section</th>
+              <th>Punjabi</th>
+              <th>English</th>
+              <th>Hindi</th>
+              <th>Science</th>
+              <th>Social Studies</th>
+              <th>Mathmatics</th>
+              <th>Physics</th>
+              <th>Chemistry</th>
           </tr>
       </thead>
+
       <tbody>
-          {% for data in student_strength %}
+          {% for data in subject_strength %}
           <tr align="center">
               <td>{{ data.studentclass }}</td>
               <td>{{ data.section }}</td>
-              <td>{{ data.scmale }}</td>
-              <td>{{ data.scfemale }}</td>
-              <td>{{ data.bcamale}}</td>
-              <td>{{ data.bcafemale }}</td>
-              <td>{{ data.bcbmale }}</td>
-              <td>{{ data.bcbfemale }}</td>
-              <td>{{ data.genmale }}</td>
-              <td>{{ data.genfemale }}</td>
-              <td>{{ data.malecwsn }}</td>
-              <td>{{ data.femalecwsn }}</td>
-              <td>{{ data.malebpl }}</td>
-              <td>{{ data.femalebpl }}</td>
-              <td>{{ data.totalmale }}</td>
-              <td>{{ data.totalfemale }}</td>
-              <td>{{ data.total }}</td>
+              <td>{{ data.punjabi }}</td>
+              <td>{{ data.english }}</td>
+              <td>{{ data.hindi}}</td>
+              <td>{{ data.science }}</td>
+              <td>{{ data.social_studies }}</td>
+              <td>{{ data.mathematics }}</td>
+              <td>{{ data.physics }}</td>
+              <td>{{ data.chemistry }}</td>
           </tr>
           {% endfor %}
       </tbody>
