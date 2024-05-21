@@ -547,6 +547,7 @@ class TimetableEntry(models.Model):
 class Student(models.Model):
     #user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     srn = models.CharField(primary_key=True,max_length=11)
+    stream = models.CharField(max_length=50, blank=True, null=True)
     school_code = models.CharField(max_length=20, blank=True, null=True)
     school_name = models.CharField(max_length=255, blank=True, null=True)
     admission_date = models.DateField(blank=True, null=True,)
@@ -614,7 +615,7 @@ class Student(models.Model):
             #    'optional': optional_subjects,
             #    #'compulsory': compulsory_subjects
             #}
-            
+                       
             # Store the dictionary in JSON format in the subjects field
                     
             self.subjects = ', '.join(optional_subjects)
