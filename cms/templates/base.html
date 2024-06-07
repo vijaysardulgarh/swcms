@@ -28,10 +28,10 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About Us</a>
+            <a class="nav-link" href="{% url 'about.html' %}">About Us</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="{% url 'contact.html' %}">Contact</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Committee</a>
@@ -39,6 +39,18 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Nodal Officer</a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Statistics</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'school_student_strength.html' %}">Student Wise Strength</a></li>
+              <li><a class="dropdown-item" href="{% url 'school_subject_strength.html' %}">Subject Wise Strength</a></li>
+              <li><a class="dropdown-item" href="#">Staff Wise Strength</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li> 
+
         </ul>
         <button type="button" class="btn btn-primary position-relative">
           Notifications

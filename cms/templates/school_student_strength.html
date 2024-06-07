@@ -7,7 +7,7 @@
     <title>School Student Strength</title>
 </head>
 <body>
-    <form method="post">
+    <form method="post" action="{% url 'student_strength' %}">
         {% csrf_token %}
         <label for="school_name">Select School Name:</label>
         <select id="school_name" name="school_name" required>

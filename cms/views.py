@@ -7,6 +7,13 @@ import itertools
 from django.db.models import Count, Q,Case, When
 from cms.utils import generate_timetable
 
+def about(request):
+    return render(request,'about.html',{})
+
+
+def contact(request):
+    return render(request,'contact.html',{})
+
 def timetable_view(request):
     # Fetch necessary data from the database
     classes = Class.objects.all()
@@ -46,7 +53,7 @@ def student_strength(request):
             
             }
 
-            student_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section',).annotate(
+            student_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section','stream').annotate(
         
             scmale=Count('srn', filter=Q(gender='Male',category__in=['SC', 'Scheduled Caste'])),  
             scfemale=Count('srn', filter=Q(gender='Female',category__in=['SC', 'Scheduled Caste'])), 
@@ -97,15 +104,15 @@ def subject_strength(request):
         
             students =Student.objects.filter(school_name=school_name)      
 
-            for student in students:
-                subjects_opted = student['subjects_opted']
+            #for student in students:
+                #subject_opted = student['subjects_opted']
 
-                if subjects_opted:
-                    subject_list = subjects_opted.split(',')
-                    subjects = []
-                    for subject in subject_list:
-                        subject_type, subject_name = subject.split(':')
-                        subjects.append(subject_name.strip())
+            #    if student.subjects_opted:
+            #        subject_list = student.subjects_opted.split(',')
+            #        subjects = []
+            #        for subject in subject_list:
+            #            subject_type, subject_name = subject.split(':')
+            #            subjects.append(subject_name.strip())
 
 
             class_order = {
@@ -119,31 +126,32 @@ def subject_strength(request):
             
             }
 
-            subject_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section',).annotate(
+            subject_strength = Student.objects.filter(school_name=school_name).values('studentclass', 'section','stream').annotate(
         
-            punjabi=Count('srn', filter=Q(subjects__in=['Punjabi'])),  
-            music=Count('srn', filter=Q(subjects__in=['Music'])),  
-            accountancy=Count('srn', filter=Q(subjects__in=['Accountancy'])),  
-            business_studies=Count('srn', filter=Q(subjects__in=['Business Studies'])),  
-            economics=Count('srn', filter=Q(subjects__in=['Economics'])),
+            punjabi=Count('srn', filter=Q(subjects_opted__icontains='Punjabi')),  
+            music=Count('srn', filter=Q(subjects_opted__icontains='Music')),  
+            accountancy=Count('srn', filter=Q(subjects_opted__icontains='Accountancy')),  
+            business_studies=Count('srn', filter=Q(subjects_opted__icontains='Business Studies')),  
+            economics=Count('srn', filter=Q(subjects_opted__icontains='Economics')),
 
-            sanskrit=Count('srn', filter=Q(subjects__in=['Sanskrit'])),  
-            fine_arts=Count('srn', filter=Q(subjects__in=['Fine Arts'])),  
-            political_science=Count('srn', filter=Q(subjects__in=['Political Science'])),  
-            mathematics=Count('srn', filter=Q(subjects__in=['Mathematics'])),  
-            psychology=Count('srn', filter=Q(subjects__in=['Psychology'])),
-            drawing=Count('srn', filter=Q(subjects__in=['Drawing'])),  
-            english=Count('srn', filter=Q(subjects__in=['English'])),  
-            hindi=Count('srn', filter=Q(subjects__in=['Hindi'])),  
-            social_science=Count('srn', filter=Q(subjects__in=['Social Science'])),  
-            science=Count('srn', filter=Q(subjects__in=['Science'])),
-            physics=Count('srn', filter=Q(subjects__in=['Physics'])),  
-            chemistry=Count('srn', filter=Q(subjects__in=['Chemistry'])),  
-            biology=Count('srn', filter=Q(subjects__in=['Biology'])),  
-            home_science=Count('srn', filter=Q(subjects__in=['Home Science'])),  
-            physical_education=Count('srn', filter=Q(subjects__in=['Physical Education'])),
-            automobile=Count('srn', filter=Q(subjects__in=['Automobile'])),  
-            beauty_wellness=Count('srn', filter=Q(subjects__in=['Beauty & Wellness'])),
+            sanskrit=Count('srn', filter=Q(subjects_opted__icontains='Sanskrit')),  
+            fine_arts=Count('srn', filter=Q(subjects_opted__icontains='Fine Arts')),  
+            political_science=Count('srn', filter=Q(subjects_opted__icontains='Political Science')),
+            geography=Count('srn', filter=Q(subjects_opted__icontains='Geography')),    
+            mathematics=Count('srn', filter=Q(subjects_opted__icontains='Mathematics')),  
+            psychology=Count('srn', filter=Q(subjects_opted__icontains='Psychology')),
+            drawing=Count('srn', filter=Q(subjects_opted__icontains='Drawing')),  
+            english=Count('srn', filter=Q(subjects_opted__icontains='English')),  
+            hindi=Count('srn', filter=Q(subjects_opted__icontains='Hindi')),  
+            social_science=Count('srn', filter=Q(subjects_opted__icontains='Social Science')),  
+            science=Count('srn', filter=Q(subjects_opted__icontains='Science')),
+            physics=Count('srn', filter=Q(subjects_opted__icontains='Physics')),  
+            chemistry=Count('srn', filter=Q(subjects_opted__icontains='Chemistry')),  
+            biology=Count('srn', filter=Q(subjects_opted__icontains='Biology')),  
+            home_science=Count('srn', filter=Q(subjects_opted__icontains='Home Science')),  
+            physical_education=Count('srn', filter=Q(subjects_opted__icontains='Physical Education')),
+            automobile=Count('srn', filter=Q(subjects_opted__icontains='Automotive')),  
+            beauty_wellness=Count('srn', filter=Q(subjects_opted__icontains='Beauty & Wellness')),
 
             order=Case(*[When(studentclass=value, then=position) for value, position in class_order.items()])
         ).order_by('order')
