@@ -149,7 +149,7 @@ def subject_strength(request):
             chemistry=Count('srn', filter=Q(subjects_opted__icontains='Chemistry')),  
             biology=Count('srn', filter=Q(subjects_opted__icontains='Biology')),  
             home_science=Count('srn', filter=Q(subjects_opted__icontains='Home Science')),  
-            physical_education=Count('srn', filter=Q(subjects_opted__icontains='Physical Education')),
+            physical_education=Count('srn', filter=Q(subjects_opted__icontains='Physical and Health Education')),
             automobile=Count('srn', filter=Q(subjects_opted__icontains='Automotive')),  
             beauty_wellness=Count('srn', filter=Q(subjects_opted__icontains='Beauty & Wellness')),
            
